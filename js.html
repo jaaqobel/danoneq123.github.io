@@ -75,23 +75,84 @@
   }
     </style>
   <script>
-  // 1. Alert na start
+  // 1. Alert
   alert("Witaj na stronie!");
 
-  // 2. Wypisanie informacji do konsoli
-  console.log("To jest komunikat w konsoli.");
+  // Tworzymy funkcję, która dodaje opis i kod na stronę w formie nagłówków H1
+  function addExample(title, code, outputFunc) {
+    // Dodajemy tytuł
+    const titleEl = document.createElement('h1');
+    titleEl.textContent = title;
+    document.body.appendChild(titleEl);
 
-  // 3. Wstawienie tekstu do strony (UWAGA: document.write nadpisuje całą stronę, więc stosuj na początku ładowania)
-  document.write("<h2>To jest tekst wstawiony przez document.write()</h2>");
+    // Dodajemy komendę
+    const codeEl = document.createElement('h1');
+    codeEl.style.fontWeight = 'normal';
+    codeEl.style.fontSize = '16px';
+    codeEl.style.fontFamily = 'monospace';
+    codeEl.textContent = code;
+    document.body.appendChild(codeEl);
 
-  // 4. Przykład użycia innerHTML i innerText:
-  // Tworzymy element div, dodajemy do body, potem pokazujemy jego zawartość w konsoli
-  const div = document.createElement("div");
-  div.innerHTML = "<p>To jest <strong>przykładowy</strong> tekst w divie.</p>";
-  document.body.appendChild(div);
+    // Wywołujemy funkcję outputową, jeśli jest
+    if (typeof outputFunc === 'function') {
+      outputFunc();
+    }
+  }
 
-  console.log("innerHTML div-a:", div.innerHTML);
-  console.log("innerText div-a:", div.innerText);
+  // Przykłady:
+  addExample(
+    "Alert - wyświetla okno z komunikatem",
+    'alert("Witaj na stronie!")',
+    null
+  );
+
+  addExample(
+    "Console.log - wypisuje tekst do konsoli",
+    'console.log("To jest komunikat w konsoli.")',
+    () => console.log("To jest komunikat w konsoli.")
+  );
+
+  addExample(
+    "Document.write - wstawia HTML do dokumentu",
+    'document.write("<h2>Tekst wstawiony przez document.write()</h2>")',
+    () => {
+      // Uwaga: document.write nadpisuje całą stronę, więc zamiast go używać tutaj,
+      // pokażemy alternatywę z innerHTML:
+      const dw = document.createElement('div');
+      dw.innerHTML = "<h2>Tekst wstawiony przez document.write()</h2>";
+      document.body.appendChild(dw);
+    }
+  );
+
+  addExample(
+    "innerHTML - zwraca zawartość HTML elementu",
+    'element.innerHTML',
+    () => {
+      const div = document.createElement("div");
+      div.innerHTML = "<p>Przykładowy <strong>tekst</strong> w divie.</p>";
+      document.body.appendChild(div);
+
+      const result = div.innerHTML;
+      const resEl = document.createElement('p');
+      resEl.textContent = "innerHTML zwraca: " + result;
+      document.body.appendChild(resEl);
+    }
+  );
+
+  addExample(
+    "innerText - zwraca tekst widoczny (bez tagów HTML)",
+    'element.innerText',
+    () => {
+      const div = document.createElement("div");
+      div.innerHTML = "<p>Przykładowy <strong>tekst</strong> w divie.</p>";
+      document.body.appendChild(div);
+
+      const result = div.innerText;
+      const resEl = document.createElement('p');
+      resEl.textContent = "innerText zwraca: " + result;
+      document.body.appendChild(resEl);
+    }
+  );
 </script>
 
 <body>
