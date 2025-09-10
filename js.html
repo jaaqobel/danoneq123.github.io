@@ -73,90 +73,91 @@
   .high-contrast a {
     color: #0ff !important;
   }
+   h1 {
+      margin-bottom: 5px;
+    }
+    .code {
+      font-family: monospace;
+      background: #222;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 14px;
+      margin-bottom: 10px;
+      user-select: text;
+    }
+    .output {
+      margin-bottom: 30px;
+      padding-left: 10px;
+      border-left: 3px solid #0ff;
     </style>
+  
+
+<body>
   <script>
-  // 1. Alert
   alert("Witaj na stronie!");
 
-  // Tworzymy funkcję, która dodaje opis i kod na stronę w formie nagłówków H1
-  function addExample(title, code, outputFunc) {
-    // Dodajemy tytuł
+  function addExample(title, code, outputText) {
     const titleEl = document.createElement('h1');
     titleEl.textContent = title;
     document.body.appendChild(titleEl);
 
-    // Dodajemy komendę
-    const codeEl = document.createElement('h1');
-    codeEl.style.fontWeight = 'normal';
-    codeEl.style.fontSize = '16px';
-    codeEl.style.fontFamily = 'monospace';
+    const codeEl = document.createElement('div');
+    codeEl.className = 'code';
     codeEl.textContent = code;
     document.body.appendChild(codeEl);
 
-    // Wywołujemy funkcję outputową, jeśli jest
-    if (typeof outputFunc === 'function') {
-      outputFunc();
-    }
+    const outputEl = document.createElement('div');
+    outputEl.className = 'output';
+    outputEl.textContent = outputText;
+    document.body.appendChild(outputEl);
   }
 
-  // Przykłady:
+  // 1. alert
   addExample(
     "Alert - wyświetla okno z komunikatem",
     'alert("Witaj na stronie!")',
-    null
+    "Wyświetiono alert z powyższym komunikatem."
   );
 
+  // 2. console.log
+  console.log("To jest komunikat w konsoli.");
   addExample(
     "Console.log - wypisuje tekst do konsoli",
     'console.log("To jest komunikat w konsoli.")',
-    () => console.log("To jest komunikat w konsoli.")
+    'Sprawdź konsolę przeglądarki, tam pojawił się komunikat: "To jest komunikat w konsoli."'
   );
+
+  // 3. document.write - zamiast document.write użyjemy innerHTML, bo document.write nadpisuje stronę
+  const docWriteHTML = "<h2>Tekst wstawiony przez document.write()</h2>";
+  const docWriteDiv = document.createElement('div');
+  docWriteDiv.innerHTML = docWriteHTML;
+  document.body.appendChild(docWriteDiv);
 
   addExample(
     "Document.write - wstawia HTML do dokumentu",
     'document.write("<h2>Tekst wstawiony przez document.write()</h2>")',
-    () => {
-      // Uwaga: document.write nadpisuje całą stronę, więc zamiast go używać tutaj,
-      // pokażemy alternatywę z innerHTML:
-      const dw = document.createElement('div');
-      dw.innerHTML = "<h2>Tekst wstawiony przez document.write()</h2>";
-      document.body.appendChild(dw);
-    }
+    "Poniżej symulacja document.write (dodany element H2):"
   );
+
+  // 4. innerHTML
+  const divHTML = document.createElement('div');
+  divHTML.innerHTML = "<p>Przykładowy <strong>tekst</strong> w divie.</p>";
+  document.body.appendChild(divHTML);
 
   addExample(
     "innerHTML - zwraca zawartość HTML elementu",
     'element.innerHTML',
-    () => {
-      const div = document.createElement("div");
-      div.innerHTML = "<p>Przykładowy <strong>tekst</strong> w divie.</p>";
-      document.body.appendChild(div);
-
-      const result = div.innerHTML;
-      const resEl = document.createElement('p');
-      resEl.textContent = "innerHTML zwraca: " + result;
-      document.body.appendChild(resEl);
-    }
+    'innerHTML elementu to: ' + divHTML.innerHTML
   );
 
+  // 5. innerText
   addExample(
     "innerText - zwraca tekst widoczny (bez tagów HTML)",
     'element.innerText',
-    () => {
-      const div = document.createElement("div");
-      div.innerHTML = "<p>Przykładowy <strong>tekst</strong> w divie.</p>";
-      document.body.appendChild(div);
-
-      const result = div.innerText;
-      const resEl = document.createElement('p');
-      resEl.textContent = "innerText zwraca: " + result;
-      document.body.appendChild(resEl);
-    }
+    'innerText elementu to: ' + divHTML.innerText
   );
-</script>
 
-<body>
-  
+</script>
  <a href="index.html">powrot</a>
 </body>
 </html>
