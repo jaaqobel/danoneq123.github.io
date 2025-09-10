@@ -74,6 +74,25 @@
     color: #0ff !important;
   }
     </style>
+  <script>
+  // 1. Alert na start
+  alert("Witaj na stronie!");
+
+  // 2. Wypisanie informacji do konsoli
+  console.log("To jest komunikat w konsoli.");
+
+  // 3. Wstawienie tekstu do strony (UWAGA: document.write nadpisuje całą stronę, więc stosuj na początku ładowania)
+  document.write("<h2>To jest tekst wstawiony przez document.write()</h2>");
+
+  // 4. Przykład użycia innerHTML i innerText:
+  // Tworzymy element div, dodajemy do body, potem pokazujemy jego zawartość w konsoli
+  const div = document.createElement("div");
+  div.innerHTML = "<p>To jest <strong>przykładowy</strong> tekst w divie.</p>";
+  document.body.appendChild(div);
+
+  console.log("innerHTML div-a:", div.innerHTML);
+  console.log("innerText div-a:", div.innerText);
+</script>
 
 <body>
   <h1>Nowa strona do informatyki z Panem Jarkiem Szkabarnickim</h1>
