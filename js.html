@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -118,9 +119,39 @@
 
 <body>
   <script>
-  
+  alert("Witaj na stronie!");
 
-  // 1. Window.Alert
+  function addExample(title, code, setupFunc, runFunc) {
+    const titleEl = document.createElement('h1');
+    titleEl.textContent = title;
+    document.body.appendChild(titleEl);
+
+    const codeEl = document.createElement('div');
+    codeEl.className = 'code';
+    codeEl.textContent = code;
+    document.body.appendChild(codeEl);
+
+    const outputEl = document.createElement('div');
+    outputEl.className = 'output';
+    document.body.appendChild(outputEl);
+
+    const btn = document.createElement('button');
+    btn.textContent = 'Uruchom przykład';
+    document.body.appendChild(btn);
+
+    // jeśli jest funkcja przygotowująca środowisko, wywołaj ją
+    if (typeof setupFunc === 'function') {
+      setupFunc(outputEl);
+    }
+
+    btn.addEventListener('click', () => {
+      if (typeof runFunc === 'function') {
+        runFunc(outputEl);
+      }
+    });
+  }
+
+  // 1. Alert
   addExample(
     "Alert - wyświetla okno z komunikatem",
     'alert("Witaj na stronie!")',
@@ -195,6 +226,6 @@
 </script>
   <br>
   <br>
- <a href="strona2.html">powrót</a>
+ <a href="strona2.html">powrot</a>
 </body>
 </html>
