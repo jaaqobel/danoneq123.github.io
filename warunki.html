@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Przykłady JS: if/else, switch, pętle</title>
+  <title>Przykłady JS: if/else, switch, pętle + Tester komend</title>
   <style>
     html {
       text-align: center;
@@ -15,7 +15,7 @@
       /* Tło w paski - efekt dekoracyjny */
       background-image: repeating-linear-gradient(
         45deg,
-        rgba(255, 255, 255, 0.05), /* lekko widoczne białe paski */
+        rgba(255, 255, 255, 0.05),
         rgba(255, 255, 255, 0.05) 10px,
         transparent 10px,
         transparent 20px
@@ -32,9 +32,7 @@
     }
 
     h1 {
-      /* Kolor domyślny będzie nadpisany przez JS animację */
       font-size: 54px;
-      /* Dodane dla lepszej czytelności */
       font-weight: bold;
     }
 
@@ -51,7 +49,7 @@
       font-family: Arial, sans-serif;
       box-shadow: 0 0 10px rgba(255,255,255,0.3);
       z-index: 9999;
-      user-select: none; /* nie pozwala zaznaczać tekstu */
+      user-select: none;
     }
 
     #controlBox button {
@@ -71,7 +69,6 @@
       background: #555;
     }
 
-    /* Tryb wysokiego kontrastu (przykładowy styl) */
     .high-contrast {
       background-color: #000 !important;
       color: #fff !important;
@@ -79,14 +76,78 @@
     .high-contrast a {
       color: #0ff !important;
     }
+
+    /* Dodatkowy styl dla panelu testowego */
+    #js-tester {
+      margin: 30px auto 50px;
+      background: #222;
+      padding: 15px;
+      border-radius: 8px;
+      width: 350px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      font-family: monospace;
+      text-align: left;
+      color: #0ff;
+    }
+
+    #js-tester label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #0ff;
+    }
+
+    #js-command {
+      width: 100%;
+      height: 80px;
+      font-size: 16px;
+      background: #121212;
+      color: #0ff;
+      border: 1px solid #0ff;
+      border-radius: 4px;
+      padding: 6px;
+      resize: vertical;
+      font-family: monospace;
+    }
+
+    #run-command {
+      margin-top: 10px;
+      width: 100%;
+      background: #0ff;
+      border: none;
+      padding: 10px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    #run-command:hover {
+      background: #0cc;
+    }
+
+    #command-output {
+      margin-top: 15px;
+      background: #000;
+      border: 1px solid #0ff;
+      padding: 10px;
+      height: 80px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      font-family: monospace;
+      color: #0ff;
+      border-radius: 4px;
+    }
+
   </style>
 </head>
 <body>
 
-  <!-- Nagłówek strony -->
   <h1>Instrukcje Warunkowe i Pętle w JavaScript</h1>
 
-  <!-- Sekcje z wynikami dla każdego przykładu -->
   <h2>1. Instrukcja <code>if...else</code></h2>
   <pre id="if-else-output"></pre>
 
@@ -102,12 +163,20 @@
   <h2>5. Pętla <code>do...while</code></h2>
   <pre id="do-while-output"></pre>
 
-  <!-- Skrypt JS z przykładami -->
-  <script>
-    // 1. IF...ELSE – sprawdzamy, czy liczba jest dodatnia, ujemna czy zero
-    let number = 10; // wartość do sprawdzenia
-    let ifElseResult = '';
+  <!-- PANEL TESTERA KOMEND JS -->
+  <div id="js-tester">
+    <label for="js-command">Wpisz komendę JavaScript i kliknij "Uruchom komendę":</label>
+    <textarea id="js-command" placeholder="np. 2 + 2"></textarea>
+    <button id="run-command">Uruchom komendę</button>
+    <div id="command-output" aria-live="polite" aria-atomic="true"></div>
+  </div>
 
+  <script>
+    // Twoje poprzednie przykłady
+
+    // 1. IF...ELSE
+    let number = 10;
+    let ifElseResult = '';
     if (number > 0) {
       ifElseResult = "Liczba jest dodatnia.";
     } else if (number < 0) {
@@ -115,14 +184,11 @@
     } else {
       ifElseResult = "Liczba jest równa zero.";
     }
-
-    // Wyświetlenie wyniku w elemencie <pre>
     document.getElementById("if-else-output").textContent = ifElseResult;
 
-    // 2. SWITCH – przypisujemy nazwę dnia tygodnia na podstawie liczby
+    // 2. SWITCH
     let day = 3;
     let dayName;
-
     switch (day) {
       case 1:
         dayName = "Poniedziałek";
@@ -140,44 +206,40 @@
         dayName = "Piątek";
         break;
       default:
-        dayName = "Weekend"; // dla 6, 7 lub innych wartości
+        dayName = "Weekend";
     }
-
     document.getElementById("switch-output").textContent = "Dzień tygodnia: " + dayName;
 
-    // 3. FOR – wypisujemy liczby od 1 do 5
+    // 3. FOR
     let forResult = '';
     for (let i = 1; i <= 5; i++) {
       forResult += "Liczba: " + i + "\n";
     }
     document.getElementById("for-output").textContent = forResult;
 
-    // 4. WHILE – wypisujemy liczby od 1 do 5
+    // 4. WHILE
     let whileResult = '';
     let w = 1;
     while (w <= 5) {
       whileResult += "Iteracja: " + w + "\n";
-      w++; // zwiększamy licznik
+      w++;
     }
     document.getElementById("while-output").textContent = whileResult;
 
-    // 5. DO...WHILE – podobnie jak wyżej, ale gwarantuje wykonanie minimum raz
+    // 5. DO...WHILE
     let doWhileResult = '';
     let d = 1;
     do {
       doWhileResult += "Licznik: " + d + "\n";
       d++;
     } while (d <= 5);
-
     document.getElementById("do-while-output").textContent = doWhileResult;
 
-    // --- ANIMACJA KOLORU NAGŁÓWKA h1 ---
+    // ANIMACJA KOLORU NAGŁÓWKA h1
     function animateH1Color() {
       const h1 = document.querySelector('h1');
       let r = 0, g = 0, b = 0;
       let step = 1;
-
-      // Zmieniamy kolor co 30ms, płynnie przechodząc przez różne wartości RGB
       setInterval(() => {
         r = (r + step) % 256;
         g = (g + step * 2) % 256;
@@ -185,10 +247,28 @@
         h1.style.color = `rgb(${r}, ${g}, ${b})`;
       }, 30);
     }
-
-    // Uruchamiamy animację po załadowaniu strony
     animateH1Color();
 
+    // --- OBSŁUGA TESTERA KOMEND ---
+    const runBtn = document.getElementById('run-command');
+    const commandInput = document.getElementById('js-command');
+    const output = document.getElementById('command-output');
+
+    runBtn.addEventListener('click', () => {
+      const code = commandInput.value.trim();
+      if (!code) {
+        output.textContent = 'Wpisz jakąś komendę JavaScript.';
+        return;
+      }
+      try {
+        // eval wykonuje wpisany kod JS (uwaga - potencjalnie niebezpieczne!)
+        const result = eval(code);
+        output.textContent = `Wynik: ${result}`;
+      } catch (err) {
+        // Jeżeli błąd w kodzie, wyświetlamy go
+        output.textContent = `Błąd: ${err.message}`;
+      }
+    });
   </script>
 
 </body>
