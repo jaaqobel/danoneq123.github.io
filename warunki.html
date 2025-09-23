@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Przykłady JS: if/else, switch, pętle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Instrukcje Warunkowe i Pętle w JavaScript</h1>
+
+  <h2>1. Instrukcja <code>if...else</code></h2>
+  <pre id="if-else-output"></pre>
+
+  <h2>2. Instrukcja <code>switch</code></h2>
+  <pre id="switch-output"></pre>
+
+  <h2>3. Pętla <code>for</code></h2>
+  <pre id="for-output"></pre>
+
+  <h2>4. Pętla <code>while</code></h2>
+  <pre id="while-output"></pre>
+
+  <h2>5. Pętla <code>do...while</code></h2>
+  <pre id="do-while-output"></pre>
+
+  <script>
+    // 1. IF...ELSE
+    let number = 10;
+    let ifElseResult = '';
+    if (number > 0) {
+      ifElseResult = "Liczba jest dodatnia.";
+    } else if (number < 0) {
+      ifElseResult = "Liczba jest ujemna.";
+    } else {
+      ifElseResult = "Liczba jest równa zero.";
+    }
+    document.getElementById("if-else-output").textContent = ifElseResult;
+
+    // 2. SWITCH
+    let day = 3;
+    let dayName;
+    switch (day) {
+      case 1:
+        dayName = "Poniedziałek";
+        break;
+      case 2:
+        dayName = "Wtorek";
+        break;
+      case 3:
+        dayName = "Środa";
+        break;
+      case 4:
+        dayName = "Czwartek";
+        break;
+      case 5:
+        dayName = "Piątek";
+        break;
+      default:
+        dayName = "Weekend";
+    }
+    document.getElementById("switch-output").textContent = "Dzień tygodnia: " + dayName;
+
+    // 3. FOR
+    let forResult = '';
+    for (let i = 1; i <= 5; i++) {
+      forResult += "Liczba: " + i + "\n";
+    }
+    document.getElementById("for-output").textContent = forResult;
+
+    // 4. WHILE
+    let whileResult = '';
+    let w = 1;
+    while (w <= 5) {
+      whileResult += "Iteracja: " + w + "\n";
+      w++;
+    }
+    document.getElementById("while-output").textContent = whileResult;
+
+    // 5. DO...WHILE
+    let doWhileResult = '';
+    let d = 1;
+    do {
+      doWhileResult += "Licznik: " + d + "\n";
+      d++;
+    } while (d <= 5);
+    document.getElementById("do-while-output").textContent = doWhileResult;
+  </script>
+
+</body>
+</html>
