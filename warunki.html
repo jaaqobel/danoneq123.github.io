@@ -31,10 +31,26 @@
       color: white;
     }
 
-    h1 {
-      color: #47d6ca; /* kolor nagłówka */
-      font-size: 54px;
-    }
+   // Funkcja do animowania koloru h1
+function animateH1Color() {
+  const h1 = document.querySelector('h1');
+  let r = 0, g = 0, b = 0;
+  let step = 1;
+
+  // Funkcja zmieniająca kolor co 30ms
+  setInterval(() => {
+    // Prosta logika do zmiany kolorów RGB cyklicznie
+    r = (r + step) % 256;
+    g = (g + step * 2) % 256;
+    b = (b + step * 3) % 256;
+
+    h1.style.color = `rgb(${r}, ${g}, ${b})`;
+  }, 30);
+}
+
+// Uruchamiamy animację po załadowaniu strony
+animateH1Color();
+
 
     /* Panel sterowania – np. dla trybu wysokiego kontrastu */
     #controlBox {
