@@ -4,88 +4,87 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Przykłady JS: if/else, switch, pętle</title>
-   <style>
-    html{  
-    text-align:center;
-      color:red;
-      font-size:20px;
+  <style>
+    html {
+      text-align: center;
+      color: red;
+      font-size: 20px;
       font-family: "Lato", sans-serif;
-      background-color: #121212; /* bardzo ciemne tło */
-  background-image: repeating-linear-gradient(
-    45deg,                /* kąt pasków */
-    rgba(255, 255, 255, 0.05), /* jasne paski, bardzo subtelne */
-    rgba(255, 255, 255, 0.05) 10px,
-    transparent 10px,
-    transparent 20px
-  );
-  background-repeat: repeat;
-  background-size: 40px 40px; /* rozmiar wzoru */
-  color: white; /* dla czytelności tekstu */
+      background-color: #121212; /* ciemne tło */
+      
+      /* Tło w paski - efekt dekoracyjny */
+      background-image: repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.05), /* lekko widoczne białe paski */
+        rgba(255, 255, 255, 0.05) 10px,
+        transparent 10px,
+        transparent 20px
+      );
+      background-repeat: repeat;
+      background-size: 40px 40px;
 
-    
-      }
-   
+      color: white; /* kolor tekstu */
+    }
 
-    a{
-      text-decoration:none;
-      color:white;
-      }
-    h1{
-      color:#47d6ca;
-       font-size:54px;
-  
-      }
-   #controlBox {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 140px;
-    background: #000;
-    color: #fff;
-    border-radius: 8px;
-    padding: 10px;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 0 10px rgba(255,255,255,0.3);
-    z-index: 9999;
-    user-select: none;
-  }
-  #controlBox button {
-    width: 100%;
-    margin: 5px 0;
-    padding: 8px;
-    background: #222;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background 0.3s;
-  }
-  #controlBox button:hover {
-    background: #555;
-  }
-  /* Wysoki kontrast */
-  .high-contrast {
-    background-color: #000 !important;
-    color: #fff !important;
-  }
-  .high-contrast a {
-    color: #0ff !important;
-  }
-      h1{
-      color:rgba(61, 210, 15);
-       font-size:54px;
-  
-      }
-      h2{
-      color:rgba(235, 38, 169);
-       font-size:54px;
-    </style>
+    a {
+      text-decoration: none; /* usuwa podkreślenie z linków */
+      color: white;
+    }
+
+    h1 {
+      color: #47d6ca; /* kolor nagłówka */
+      font-size: 54px;
+    }
+
+    /* Panel sterowania – np. dla trybu wysokiego kontrastu */
+    #controlBox {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 140px;
+      background: #000;
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      font-family: Arial, sans-serif;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+      z-index: 9999;
+      user-select: none; /* nie pozwala zaznaczać tekstu */
+    }
+
+    #controlBox button {
+      width: 100%;
+      margin: 5px 0;
+      padding: 8px;
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    #controlBox button:hover {
+      background: #555;
+    }
+
+    /* Tryb wysokiego kontrastu (przykładowy styl) */
+    .high-contrast {
+      background-color: #000 !important;
+      color: #fff !important;
+    }
+    .high-contrast a {
+      color: #0ff !important;
+    }
+  </style>
 </head>
 <body>
 
+  <!-- Nagłówek strony -->
   <h1>Instrukcje Warunkowe i Pętle w JavaScript</h1>
 
+  <!-- Sekcje z wynikami dla każdego przykładu -->
   <h2>1. Instrukcja <code>if...else</code></h2>
   <pre id="if-else-output"></pre>
 
@@ -101,10 +100,12 @@
   <h2>5. Pętla <code>do...while</code></h2>
   <pre id="do-while-output"></pre>
 
+  <!-- Skrypt JS z przykładami -->
   <script>
-    // 1. IF...ELSE
-    let number = 10;
+    // 1. IF...ELSE – sprawdzamy, czy liczba jest dodatnia, ujemna czy zero
+    let number = 10; // wartość do sprawdzenia
     let ifElseResult = '';
+
     if (number > 0) {
       ifElseResult = "Liczba jest dodatnia.";
     } else if (number < 0) {
@@ -112,11 +113,14 @@
     } else {
       ifElseResult = "Liczba jest równa zero.";
     }
+
+    // Wyświetlenie wyniku w elemencie <pre>
     document.getElementById("if-else-output").textContent = ifElseResult;
 
-    // 2. SWITCH
+    // 2. SWITCH – przypisujemy nazwę dnia tygodnia na podstawie liczby
     let day = 3;
     let dayName;
+
     switch (day) {
       case 1:
         dayName = "Poniedziałek";
@@ -134,33 +138,35 @@
         dayName = "Piątek";
         break;
       default:
-        dayName = "Weekend";
+        dayName = "Weekend"; // dla 6, 7 lub innych wartości
     }
+
     document.getElementById("switch-output").textContent = "Dzień tygodnia: " + dayName;
 
-    // 3. FOR
+    // 3. FOR – wypisujemy liczby od 1 do 5
     let forResult = '';
     for (let i = 1; i <= 5; i++) {
       forResult += "Liczba: " + i + "\n";
     }
     document.getElementById("for-output").textContent = forResult;
 
-    // 4. WHILE
+    // 4. WHILE – wypisujemy liczby od 1 do 5
     let whileResult = '';
     let w = 1;
     while (w <= 5) {
       whileResult += "Iteracja: " + w + "\n";
-      w++;
+      w++; // zwiększamy licznik
     }
     document.getElementById("while-output").textContent = whileResult;
 
-    // 5. DO...WHILE
+    // 5. DO...WHILE – podobnie jak wyżej, ale gwarantuje wykonanie minimum raz
     let doWhileResult = '';
     let d = 1;
     do {
       doWhileResult += "Licznik: " + d + "\n";
       d++;
     } while (d <= 5);
+
     document.getElementById("do-while-output").textContent = doWhileResult;
   </script>
 
