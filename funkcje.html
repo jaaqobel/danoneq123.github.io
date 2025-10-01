@@ -1,1 +1,270 @@
 
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktywne Funkcje JavaScript</title>
+    <link rel="icon" type="image/x-icon" href="../image/icon.png">
+    <link rel="stylesheet" href="../style2.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            flex-direction: column;
+            color: #333;
+        }
+
+        .content {
+            width: 80%;
+            max-width: 900px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-top: 30px;
+        }
+
+        h3 {
+            font-size: 24px;
+            margin-top: 15px;
+        }
+
+        .nav {
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 16px;
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+        }
+
+        .nav:hover {
+            text-decoration: underline;
+        }
+
+        .area-text {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .nav-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .nav-button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        footer {
+            font-size: 10px;
+            color: rgb(219, 219, 219);
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        footer a {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="content">
+        <h1>Interaktywne Funkcje JavaScript</h1>
+        <a href="index.html" class="nav">Wróć do szkolnych rzeczy ;(</a>
+        <hr>
+        <h2>Funkcje</h2>
+
+        <h3>1. Prompt + Alert</h3>
+        <textarea class="area-text" rows="10" readonly>
+function examplePrompt() {
+    const name = prompt("Jak masz na imię?");
+    alert("Cześć, " + name + "!");
+}
+        </textarea><br>
+        <button onclick="examplePrompt()" class="nav-button">Sprawdź</button>
+        <div id="result-prompt" class="result"></div>
+
+        <h3>2. Confirm</h3>
+        <textarea class="area-text" rows="10" readonly>
+function exampleConfirm() {
+    const answer = confirm("Czy lubisz JavaScript?");
+    if (answer) {
+        alert("Super, że lubisz JavaScript!");
+    } else {
+        alert("Szkoda, może się przekonasz.");
+    }
+}
+        </textarea><br>
+        <button onclick="exampleConfirm()" class="nav-button">Sprawdź</button>
+        <div id="result-confirm" class="result"></div>
+
+        <h3>3. ParseInt</h3>
+        <textarea class="area-text" rows="10" readonly>
+function exampleParseInt() {
+    const input = prompt("Podaj liczbę całkowitą:");
+    const number = parseInt(input);
+    alert("Wczytana liczba całkowita to: " + number);
+}
+        </textarea><br>
+        <button onclick="exampleParseInt()" class="nav-button">Sprawdź</button>
+        <div id="result-parseint" class="result"></div>
+
+        <h3>4. ParseFloat</h3>
+        <textarea class="area-text" rows="10" readonly>
+function exampleParseFloat() {
+    const input = prompt("Podaj liczbę zmiennoprzecinkową:");
+    const number = parseFloat(input);
+    alert("Wczytana liczba to: " + number);
+}
+        </textarea><br>
+        <button onclick="exampleParseFloat()" class="nav-button">Sprawdź</button>
+        <div id="result-parsefloat" class="result"></div>
+
+        <h3>5. Number()</h3>
+        <textarea class="area-text" rows="10" readonly>
+function exampleNumber() {
+    const input = prompt("Podaj coś do konwersji na liczbę:");
+    const number = Number(input);
+    alert("Wynik konwersji to: " + number);
+}
+        </textarea><br>
+        <button onclick="exampleNumber()" class="nav-button">Sprawdź</button>
+        <div id="result-number" class="result"></div>
+
+        <h3>6. isNaN</h3>
+        <textarea class="area-text" rows="10" readonly>
+function exampleIsNaN() {
+    const input = prompt("Podaj coś do sprawdzenia czy to liczba:");
+    if (isNaN(input)) {
+        alert("To NIE jest liczba!");
+    } else {
+        alert("To jest liczba.");
+    }
+}
+        </textarea><br>
+        <button onclick="exampleIsNaN()" class="nav-button">Sprawdź</button>
+        <div id="result-isnan" class="result"></div>
+
+        <h3>7. Prosta funkcja sumująca</h3>
+        <textarea class="area-text" rows="10" readonly>
+function exampleSum() {
+    const a = parseFloat(prompt("Podaj pierwszą liczbę:"));
+    const b = parseFloat(prompt("Podaj drugą liczbę:"));
+    if (isNaN(a) || isNaN(b)) {
+        alert("Podano nieprawidłową liczbę.");
+        return;
+    }
+    alert("Suma wynosi: " + (a + b));
+}
+        </textarea><br>
+        <button onclick="exampleSum()" class="nav-button">Sprawdź</button>
+        <div id="result-sum" class="result"></div>
+    </div>
+
+    <footer>
+        Copyright (c) kitxchi 2024-2025 <br>
+        <a href="#">Privacy Policy</a>
+    </footer>
+
+    <script>
+        // 1. Prompt i alert
+        function examplePrompt() {
+            const name = prompt("Jak masz na imię?");
+            document.getElementById('result-prompt').innerText = "Cześć, " + name + "!";
+        }
+
+        // 2. Confirm
+        function exampleConfirm() {
+            const answer = confirm("Czy lubisz JavaScript?");
+            const result = answer ? "Super, że lubisz JavaScript!" : "Szkoda, może się przekonasz.";
+            document.getElementById('result-confirm').innerText = result;
+        }
+
+        // 3. parseInt - konwersja na liczbę całkowitą
+        function exampleParseInt() {
+            const input = prompt("Podaj liczbę całkowitą:");
+            const number = parseInt(input);
+            document.getElementById('result-parseint').innerText = "Wczytana liczba całkowita to: " + number;
+        }
+
+        // 4. parseFloat - konwersja na liczbę zmiennoprzecinkową
+        function exampleParseFloat() {
+            const input = prompt("Podaj liczbę zmiennoprzecinkową:");
+            const number = parseFloat(input);
+            document.getElementById('result-parsefloat').innerText = "Wczytana liczba to: " + number;
+        }
+
+        // 5. Number() - konwersja na liczbę
+        function exampleNumber() {
+            const input = prompt("Podaj coś do konwersji na liczbę:");
+            const number = Number(input);
+            document.getElementById('result-number').innerText = "Wynik konwersji to: " + number;
+        }
+
+        // 6. isNaN - sprawdzanie czy wartość nie jest liczbą
+        function exampleIsNaN() {
+            const input = prompt("Podaj coś do sprawdzenia czy to liczba:");
+            const result = isNaN(input) ? "To NIE jest liczba!" : "To jest liczba.";
+            document.getElementById('result-isnan').innerText = result;
+        }
+
+        // 7. Prosta funkcja sumująca dwie liczby
+        function exampleSum() {
+            const a = parseFloat(prompt("Podaj pierwszą liczbę:"));
+            const b = parseFloat(prompt("Podaj drugą liczbę:"));
+            if (isNaN(a) || isNaN(b)) {
+                document.getElementById('result-sum').innerText = "Podano nieprawidłową liczbę.";
+                return;
+            }
+            document.getElementById('result-sum').innerText = "Suma wynosi: " + (a + b);
+        }
+    </script>
+</body>
+
+</html>
