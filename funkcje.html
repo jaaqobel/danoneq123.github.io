@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 
@@ -14,41 +13,38 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f4f4f9;
+            background-color: #2c2c2c; /* Ciemniejsze tło */
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            height: 100vh;
+            min-height: 100vh;
             flex-direction: column;
-            color: #333;
+            color: #f5f5f5; /* Jaśniejszy tekst */
+            overflow-y: auto; /* Przewijanie w pionie */
         }
 
         .content {
             width: 80%;
             max-width: 900px;
             padding: 20px;
-            background-color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #333333; /* Ciemniejszy kontener */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-radius: 8px;
             margin-top: 30px;
+            overflow: hidden;
         }
 
         h1 {
             font-size: 32px;
             margin-bottom: 20px;
             text-align: center;
+            color: #4CAF50; /* Zielony nagłówek */
         }
 
-        h2 {
-            font-size: 28px;
-            margin-top: 30px;
-        }
-
-        h3 {
-            font-size: 24px;
-            margin-top: 15px;
+        h2, h3 {
+            color: #f5f5f5; /* Jaśniejszy kolor nagłówków */
         }
 
         .nav {
@@ -68,11 +64,13 @@
             width: 100%;
             padding: 10px;
             font-size: 14px;
-            border: 1px solid #ccc;
+            border: 1px solid #555;
             border-radius: 5px;
             margin-bottom: 15px;
             min-height: 100px;
             resize: vertical;
+            background-color: #444; /* Ciemniejsze tło textarea */
+            color: #f5f5f5; /* Jaśniejszy tekst */
         }
 
         .nav-button {
@@ -94,14 +92,15 @@
         .result {
             margin-top: 10px;
             padding: 10px;
-            background-color: #f1f1f1;
+            background-color: #444;
             border-radius: 5px;
             font-size: 16px;
+            color: #f5f5f5;
         }
 
         footer {
             font-size: 10px;
-            color: rgb(219, 219, 219);
+            color: rgb(180, 180, 180); /* Jaśniejszy tekst w stopce */
             text-align: center;
             margin-top: 20px;
         }
@@ -213,48 +212,42 @@ function exampleSum() {
     </footer>
 
     <script>
-        // 1. Prompt i alert
+        // Funkcje JavaScript
         function examplePrompt() {
             const name = prompt("Jak masz na imię?");
             document.getElementById('result-prompt').innerText = "Cześć, " + name + "!";
         }
 
-        // 2. Confirm
         function exampleConfirm() {
             const answer = confirm("Czy lubisz JavaScript?");
             const result = answer ? "Super, że lubisz JavaScript!" : "Szkoda, może się przekonasz.";
             document.getElementById('result-confirm').innerText = result;
         }
 
-        // 3. parseInt - konwersja na liczbę całkowitą
         function exampleParseInt() {
             const input = prompt("Podaj liczbę całkowitą:");
             const number = parseInt(input);
             document.getElementById('result-parseint').innerText = "Wczytana liczba całkowita to: " + number;
         }
 
-        // 4. parseFloat - konwersja na liczbę zmiennoprzecinkową
         function exampleParseFloat() {
             const input = prompt("Podaj liczbę zmiennoprzecinkową:");
             const number = parseFloat(input);
             document.getElementById('result-parsefloat').innerText = "Wczytana liczba to: " + number;
         }
 
-        // 5. Number() - konwersja na liczbę
         function exampleNumber() {
             const input = prompt("Podaj coś do konwersji na liczbę:");
             const number = Number(input);
             document.getElementById('result-number').innerText = "Wynik konwersji to: " + number;
         }
 
-        // 6. isNaN - sprawdzanie czy wartość nie jest liczbą
         function exampleIsNaN() {
             const input = prompt("Podaj coś do sprawdzenia czy to liczba:");
             const result = isNaN(input) ? "To NIE jest liczba!" : "To jest liczba.";
             document.getElementById('result-isnan').innerText = result;
         }
 
-        // 7. Prosta funkcja sumująca dwie liczby
         function exampleSum() {
             const a = parseFloat(prompt("Podaj pierwszą liczbę:"));
             const b = parseFloat(prompt("Podaj drugą liczbę:"));
