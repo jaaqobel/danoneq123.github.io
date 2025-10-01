@@ -37,17 +37,10 @@
 
         .right {
             width: 40%; /* Prawa strona zajmuje 40% szerokości */
-            height: 100vh; /* Pełna wysokość widoku */
-            margin-top: 30px;
-            display: flex; /* Umożliwia centrowanie zawartości */
+            display: flex;
             justify-content: center;
             align-items: center;
-        }
-
-        .right img {
-            width: 100%; /* Szerokość GIF-u dopasowana do kontenera */
-            height: 100vh; /* Wysokość GIF-u dopasowana do pełnej wysokości */
-            object-fit: cover; /* GIF wypełnia cały kontener bez zniekształceń */
+            margin-top: 30px;
         }
 
         h1 {
@@ -164,7 +157,7 @@ function exampleSum() {
 
     <div class="right">
         <!-- Miejsce na GIF -->
-        <img src="subway.gif" alt="Interaktywny GIF">
+        <img src="path_to_your_gif.gif" alt="Interaktywny GIF" style="max-width: 100%; height: auto;">
     </div>
 
     <script>
