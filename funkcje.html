@@ -11,42 +11,35 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet">
     <style>
+        /* Globalne style */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #2c2c2c;
             margin: 0;
             padding: 0;
-            display: flex; /* Użycie flexboxa */
+            display: flex;
             justify-content: center;
-            align-items: flex-start; /* Wyrównanie do góry */
+            align-items: center;
             min-height: 100vh;
-            flex-direction: row; /* Ustawienie elementów w poziomie */
+            flex-direction: column;
             color: #f5f5f5;
+            overflow-y: auto;
         }
 
-        .left {
-            width: 60%; /* Lewa strona zajmuje 60% szerokości */
+        /* Kontener główny */
+        .content {
+            width: 90%;
+            max-width: 1000px;
             padding: 20px;
             background-color: #333333;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-radius: 8px;
-            margin-top: 30px;
-            overflow: hidden;
             text-align: center;
-        }
-
-        .right {
-            width: 40%; /* Prawa strona zajmuje 40% szerokości */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 30px;
         }
 
         h1 {
-            font-size: 32px;
+            font-size: 2rem;
             margin-bottom: 20px;
-            text-align: center;
             color: #4CAF50;
         }
 
@@ -59,14 +52,14 @@
             text-decoration: none;
             font-size: 16px;
             margin-bottom: 20px;
-            display: block;
-            text-align: center;
+            display: inline-block;
         }
 
         .nav:hover {
             text-decoration: underline;
         }
 
+        /* Area textarea */
         .area-text {
             width: 100%;
             padding: 10px;
@@ -80,8 +73,9 @@
             color: #f5f5f5;
         }
 
+        /* Przycisk */
         .nav-button {
-            padding: 10px 20px;
+            padding: 12px 25px;
             background-color: #007bff;
             color: white;
             font-size: 16px;
@@ -96,6 +90,7 @@
             background-color: #0056b3;
         }
 
+        /* Wyniki */
         .result {
             margin-top: 10px;
             padding: 10px;
@@ -103,10 +98,12 @@
             border-radius: 5px;
             font-size: 16px;
             color: #f5f5f5;
+            min-height: 30px;
         }
 
+        /* Stopka */
         footer {
-            font-size: 10px;
+            font-size: 12px;
             color: rgb(180, 180, 180);
             text-align: center;
             margin-top: 20px;
@@ -115,12 +112,31 @@
         footer a {
             color: #4CAF50;
         }
+
+        /* Responsywność */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .nav-button {
+                width: 100%;
+                padding: 15px;
+                font-size: 18px;
+            }
+
+            .content {
+                width: 95%;
+                padding: 10px;
+            }
+        }
+
     </style>
 </head>
 
 <body>
 
-    <div class="left">
+    <div class="content">
         <h1>Interaktywne Funkcje JavaScript</h1>
         <a href="index.html" class="nav">powrót ;(</a>
         <hr>
@@ -137,7 +153,66 @@ function examplePrompt() {
         <button onclick="examplePrompt()" class="nav-button">Sprawdź</button>
         <div id="result-prompt" class="result"></div>
 
-        <!-- ... (Pozostałe funkcje są takie same) -->
+        <h3>2. Confirm</h3>
+        <textarea class="area-text" rows="10" readonly>
+function exampleConfirm() {
+    const answer = confirm("Czy lubisz JavaScript?");
+    if (answer) {
+        alert("Super, że lubisz JavaScript!");
+    } else {
+        alert("Szkoda, może się przekonasz.");
+    }
+}
+        </textarea><br>
+        <button onclick="exampleConfirm()" class="nav-button">Sprawdź</button>
+        <div id="result-confirm" class="result"></div>
+
+        <h3>3. ParseInt</h3>
+        <textarea class="area-text" rows="10" readonly>
+function exampleParseInt() {
+    const input = prompt("Podaj liczbę całkowitą:");
+    const number = parseInt(input);
+    alert("Wczytana liczba całkowita to: " + number);
+}
+        </textarea><br>
+        <button onclick="exampleParseInt()" class="nav-button">Sprawdź</button>
+        <div id="result-parseint" class="result"></div>
+
+        <h3>4. ParseFloat</h3>
+        <textarea class="area-text" rows="10" readonly>
+function exampleParseFloat() {
+    const input = prompt("Podaj liczbę zmiennoprzecinkową:");
+    const number = parseFloat(input);
+    alert("Wczytana liczba to: " + number);
+}
+        </textarea><br>
+        <button onclick="exampleParseFloat()" class="nav-button">Sprawdź</button>
+        <div id="result-parsefloat" class="result"></div>
+
+        <h3>5. Number()</h3>
+        <textarea class="area-text" rows="10" readonly>
+function exampleNumber() {
+    const input = prompt("Podaj coś do konwersji na liczbę:");
+    const number = Number(input);
+    alert("Wynik konwersji to: " + number);
+}
+        </textarea><br>
+        <button onclick="exampleNumber()" class="nav-button">Sprawdź</button>
+        <div id="result-number" class="result"></div>
+
+        <h3>6. isNaN</h3>
+        <textarea class="area-text" rows="10" readonly>
+function exampleIsNaN() {
+    const input = prompt("Podaj coś do sprawdzenia czy to liczba:");
+    if (isNaN(input)) {
+        alert("To NIE jest liczba!");
+    } else {
+        alert("To jest liczba.");
+    }
+}
+        </textarea><br>
+        <button onclick="exampleIsNaN()" class="nav-button">Sprawdź</button>
+        <div id="result-isnan" class="result"></div>
 
         <h3>7. Prosta funkcja sumująca</h3>
         <textarea class="area-text" rows="10" readonly>
@@ -153,11 +228,6 @@ function exampleSum() {
         </textarea><br>
         <button onclick="exampleSum()" class="nav-button">Sprawdź</button>
         <div id="result-sum" class="result"></div>
-    </div>
-
-    <div class="right">
-        <!-- Miejsce na GIF -->
-        <img src="path_to_your_gif.gif" alt="Interaktywny GIF" style="max-width: 100%; height: auto;">
     </div>
 
     <script>
@@ -207,6 +277,10 @@ function exampleSum() {
             document.getElementById('result-sum').innerText = "Suma wynosi: " + (a + b);
         }
     </script>
+
+    <footer>
+        <p>&copy; 2025 Twoja Strona. <a href="https://github.com">GitHub</a></p>
+    </footer>
 
 </body>
 
