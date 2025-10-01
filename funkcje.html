@@ -262,6 +262,30 @@ function exampleSum() {
             document.getElementById('result-sum').innerText = "Suma wynosi: " + (a + b);
         }
     </script>
+    <div class="container">
+        <h1>Przykład funkcji i wyrażeń funkcji</h1>
+        
+        <!-- Przycisk wywołujący funkcję deklaracyjną -->
+        <button onclick="mojaFunkcja()">Kliknij, aby wywołać funkcję deklaracyjną</button>
+        
+        <!-- Przycisk wywołujący funkcję wyrażeniową -->
+        <button onclick="mojaFunkcja2()">Kliknij, aby wywołać funkcję wyrażeniową</button>
+
+        <div class="output" id="output"></div>
+    </div>
+
+    <script>
+        // Funkcja deklaracyjna
+        function mojaFunkcja() {
+            document.getElementById('output').textContent = 'Funkcja deklaracyjna została wywołana!';
+        }
+
+        // Funkcja wyrażeniowa
+        const mojaFunkcja2 = function() {
+            document.getElementById('output').textContent = 'Funkcja wyrażeniowa została wywołana!';
+        };
+    </script>
+
 </body>
 
 </html>
