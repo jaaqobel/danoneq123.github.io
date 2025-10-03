@@ -4,146 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Operatory w PHP</title>
- <style>
-    html{  
-    text-align:center;
-      color:red;
-      font-size:35px;
-      font-family: "Lato", sans-serif;
-      background-color: #121212; /* bardzo ciemne tło */
-  background-image: repeating-linear-gradient(
-    45deg,                /* kąt pasków */
-    rgba(255, 255, 255, 0.05), /* jasne paski, bardzo subtelne */
-    rgba(255, 255, 255, 0.05) 10px,
-    transparent 10px,
-    transparent 20px
-  );
-  background-repeat: repeat;
-  background-size: 40px 40px; /* rozmiar wzoru */
-  color: white; /* dla czytelności tekstu */
+    <style>
+        html {  
+            text-align: center;
+            color: red;
+            font-size: 35px;
+            font-family: "Lato", sans-serif;
+            background-color: #121212; 
+            background-image: repeating-linear-gradient(
+                45deg, 
+                rgba(255, 255, 255, 0.05),
+                rgba(255, 255, 255, 0.05) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            background-repeat: repeat;
+            background-size: 40px 40px;
+            color: white;
+        }
 
-    
-      }
-   
+        a {
+            text-decoration: none;
+            color: white;
+        }
+        h1, h2 {
+            color: rgba(61, 219, 127);
+            font-size: 54px;
+        }
+        h2 {
+            color: rgba(235, 38, 169);
+        }
+        .section {
+            margin-bottom: 30px;
+        }
 
-    a{
-      text-decoration:none;
-      color:white;
-      }
-    h1{
-      color:rgba(61, 219, 127);
-       font-size:54px;
-  
-      }
-      h2{
-      color:rgba(235, 38, 169);
-       font-size:54px;
-  
-      }
-   #controlBox {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 140px;
-    background: #000;
-    color: #fff;
-    border-radius: 8px;
-    padding: 10px;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 0 10px rgba(255,255,255,0.3);
-    z-index: 9999;
-    user-select: none;
-  }
-  #controlBox button {
-    width: 100%;
-    margin: 5px 0;
-    padding: 8px;
-    background: #222;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background 0.3s;
-  }
-  #controlBox button:hover {
-    background: #555;
-  }
-  /* Wysoki kontrast */
-  .high-contrast {
-    background-color: #000 !important;
-    color: #fff !important;
-  }
-  .high-contrast a {
-    color: #0ff !important;
-  }
-   h1 {
-      margin-bottom: 5px;
-    }
-    .code {
-      font-family: monospace;
-      background: #222;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 14px;
-      margin-bottom: 10px;
-      user-select: text;
-    }
-    .output {
-      margin-bottom: 30px;
-      padding-left: 10px;
-      border-left: 3px solid #0ff;
-      .code {
-      font-family: monospace;
-      background: #222;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 14px;
-      margin-bottom: 10px;
-      user-select: text;
-      white-space: pre-wrap;
-    }
-    
-    button {
-      background: #0ff;
-      border: none;
-      border-radius: 4px;
-      padding: 6px 10px;
-      cursor: pointer;
-      font-weight: bold;
-      color: #000;
-      margin-bottom: 10px;
-    }
-    button:hover {
-      background: #0cc;
-    }
-         pre {
+        .toggle-button {
+            background: #0ff;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        .toggle-button:hover {
+            background: #0cc;
+        }
+
+        pre {
             background-color: white;
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #ddd;
         }
+
         code {
             font-family: Consolas, monospace;
-        
         }
-      p{color:white;
-        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
             padding: 20px;
             background-color: #2e2c2c;
         }
+
+        .output {
+            padding-left: 10px;
+            border-left: 3px solid #0ff;
+        }
+
     </style>
-  
 </head>
 <body>
     <h1>Operatory w PHP</h1>
     
-    <h2>1. Operatory arytmetyczne</h2>
-    <p>Operatory arytmetyczne wykonują podstawowe operacje matematyczne:</p>
-    <pre><code>
+    <div class="section">
+        <h2>1. Operatory arytmetyczne</h2>
+        <button class="toggle-button" onclick="toggleCode('arithmetics')">Pokaż kod</button>
+        <div id="arithmetics" style="display: none;">
+            <pre><code>
 $a = 10;
 $b = 5;
 $sum = $a + $b; // Wynik: 15
@@ -152,11 +93,15 @@ $product = $a * $b; // Wynik: 50
 $quotient = $a / $b; // Wynik: 2
 $remainder = $a % $b; // Wynik: 0
 $exponentiation = $a ** $b; // Wynik: 100000
-    </code></pre>
+            </code></pre>
+        </div>
+    </div>
 
-    <h2>2. Operatory porównania</h2>
-    <p>Operatory porównania służą do porównywania wartości:</p>
-    <pre><code>
+    <div class="section">
+        <h2>2. Operatory porównania</h2>
+        <button class="toggle-button" onclick="toggleCode('comparison')">Pokaż kod</button>
+        <div id="comparison" style="display: none;">
+            <pre><code>
 $isEqual = ($a == $b); // Wynik: false
 $isIdentical = ($a === $b); // Wynik: false
 $isNotEqual = ($a != $b); // Wynik: true
@@ -165,19 +110,27 @@ $isGreaterThan = ($a > $b); // Wynik: true
 $isLessThan = ($a < $b); // Wynik: false
 $isGreaterThanOrEqual = ($a >= $b); // Wynik: true
 $isLessThanOrEqual = ($a <= $b); // Wynik: false
-    </code></pre>
+            </code></pre>
+        </div>
+    </div>
 
-    <h2>3. Operatory logiczne</h2>
-    <p>Operatory logiczne wykonują operacje na wartościach boolean:</p>
-    <pre><code>
+    <div class="section">
+        <h2>3. Operatory logiczne</h2>
+        <button class="toggle-button" onclick="toggleCode('logical')">Pokaż kod</button>
+        <div id="logical" style="display: none;">
+            <pre><code>
 $and = ($a > 5 && $b < 10); // Wynik: true
 $or = ($a > 5 || $b < 10);  // Wynik: true
 $not = !($a > 5);            // Wynik: false
-    </code></pre>
+            </code></pre>
+        </div>
+    </div>
 
-    <h2>4. Operatory przypisania</h2>
-    <p>Operatory przypisania służą do przypisywania wartości do zmiennych:</p>
-    <pre><code>
+    <div class="section">
+        <h2>4. Operatory przypisania</h2>
+        <button class="toggle-button" onclick="toggleCode('assignment')">Pokaż kod</button>
+        <div id="assignment" style="display: none;">
+            <pre><code>
 $x = 5;
 $x += 2;  // Wynik: 7
 $x -= 3;  // Wynik: 4
@@ -185,24 +138,45 @@ $x *= 4;  // Wynik: 16
 $x /= 2;  // Wynik: 8
 $x %= 3;  // Wynik: 2
 $x .= " test"; // Wynik: 2 test
-    </code></pre>
+            </code></pre>
+        </div>
+    </div>
 
-    <h2>5. Operatory inkrementacji i dekrementacji</h2>
-    <p>Operatory inkrementacji i dekrementacji zwiększają lub zmniejszają wartość zmiennej o 1:</p>
-    <pre><code>
+    <div class="section">
+        <h2>5. Operatory inkrementacji i dekrementacji</h2>
+        <button class="toggle-button" onclick="toggleCode('increment')">Pokaż kod</button>
+        <div id="increment" style="display: none;">
+            <pre><code>
 $y = 1;
 $y++; // Wynik: 2 (inkrementacja)
 $y--; // Wynik: 1 (dekrementacja)
-    </code></pre>
+            </code></pre>
+        </div>
+    </div>
 
-    <h2>6. Operator typu (rzutowanie)</h2>
-    <p>Rzutowanie pozwala na konwersję jednego typu zmiennej na inny typ:</p>
-    <pre><code>
+    <div class="section">
+        <h2>6. Operator typu (rzutowanie)</h2>
+        <button class="toggle-button" onclick="toggleCode('typecast')">Pokaż kod</button>
+        <div id="typecast" style="display: none;">
+            <pre><code>
 $z = (int) 3.14;  // Wynik: 3
 $w = (bool) 1;    // Wynik: true
-    </code></pre>
+            </code></pre>
+        </div>
+    </div>
 
     <h2>Podsumowanie</h2>
     <p>PHP oferuje szeroką gamę operatorów, które umożliwiają wykonywanie różnych operacji na danych. W zależności od potrzeb można używać operatorów arytmetycznych, logicznych, przypisania oraz porównania. Poznanie i zrozumienie tych operatorów jest kluczowe do efektywnego programowania w PHP.</p>
+
+    <script>
+        function toggleCode(id) {
+            var codeBlock = document.getElementById(id);
+            if (codeBlock.style.display === "none") {
+                codeBlock.style.display = "block";
+            } else {
+                codeBlock.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
