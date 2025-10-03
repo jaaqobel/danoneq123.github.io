@@ -10,7 +10,7 @@
             color: red;
             font-size: 35px;
             font-family: "Lato", sans-serif;
-            background-color: #121212; 
+            background-color: #1a1a2e; /* Ciemno-niebieskie tło */
             background-image: repeating-linear-gradient(
                 45deg, 
                 rgba(255, 255, 255, 0.05),
@@ -27,36 +27,46 @@
             text-decoration: none;
             color: white;
         }
+
         h1, h2 {
             color: rgba(61, 219, 127);
             font-size: 54px;
         }
+
         h2 {
             color: rgba(235, 38, 169);
         }
+
         .section {
             margin-bottom: 30px;
         }
 
         .toggle-button {
-            background: #0ff;
+            background: #4f79cc; /* Niebieski przycisk */
             border: none;
             border-radius: 4px;
-            padding: 6px 10px;
+            padding: 8px 12px;
             cursor: pointer;
             font-weight: bold;
-            color: #000;
+            color: #fff;
             margin-bottom: 10px;
+            transition: background 0.3s ease;
         }
+
         .toggle-button:hover {
-            background: #0cc;
+            background: #3b64b0; /* Ciemniejszy odcień niebieskiego po najechaniu */
+        }
+
+        .toggle-button:active {
+            background: #2a4c8a; /* Jeszcze ciemniejszy odcień przy kliknięciu */
         }
 
         pre {
-            background-color: white;
+            background-color: #21212b; /* Ciemniejsze tło dla kodu */
             padding: 10px;
             border-radius: 5px;
-            border: 1px solid #ddd;
+            border: 1px solid #444;
+            color: #f5f5f5; /* Jaśniejszy tekst w kodzie */
         }
 
         code {
@@ -67,7 +77,7 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             padding: 20px;
-            background-color: #2e2c2c;
+            background-color: #121212; /* Ciemne tło dla całego ciała strony */
         }
 
         .output {
