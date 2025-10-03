@@ -5,36 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Operatory w PHP</title>
     <style>
-        html {  
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2a2b3c; /* Nowoczesne ciemno-niebieskie tło */
+            color: #f1f1f1;
+            margin: 0;
+            padding: 20px;
             text-align: center;
-            color: red;
-            font-size: 35px;
-            font-family: "Lato", sans-serif;
-            background-color: #1a1a2e; /* Ciemno-niebieskie tło */
-            background-image: repeating-linear-gradient(
-                45deg, 
-                rgba(255, 255, 255, 0.05),
-                rgba(255, 255, 255, 0.05) 10px,
-                transparent 10px,
-                transparent 20px
-            );
-            background-repeat: repeat;
-            background-size: 40px 40px;
-            color: white;
-        }
-
-        a {
-            text-decoration: none;
-            color: white;
         }
 
         h1, h2 {
-            color: rgba(61, 219, 127);
-            font-size: 54px;
-        }
-
-        h2 {
-            color: rgba(235, 38, 169);
+            color: #fff;
         }
 
         .section {
@@ -42,151 +23,143 @@
         }
 
         .toggle-button {
-            background: #4f79cc; /* Niebieski przycisk */
+            background: #3b67a2;
             border: none;
-            border-radius: 4px;
-            padding: 8px 12px;
+            border-radius: 8px;
+            padding: 12px 24px;
             cursor: pointer;
-            font-weight: bold;
             color: #fff;
-            margin-bottom: 10px;
+            font-size: 18px;
             transition: background 0.3s ease;
         }
 
         .toggle-button:hover {
-            background: #3b64b0; /* Ciemniejszy odcień niebieskiego po najechaniu */
+            background: #285285;
         }
 
         .toggle-button:active {
-            background: #2a4c8a; /* Jeszcze ciemniejszy odcień przy kliknięciu */
+            background: #1f3f6e;
         }
 
-        pre {
-            background-color: #21212b; /* Ciemniejsze tło dla kodu */
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #444;
-            color: #f5f5f5; /* Jaśniejszy tekst w kodzie */
-        }
-
-        code {
-            font-family: Consolas, monospace;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+        .input-container {
+            margin-top: 20px;
+            display: none;
+            background-color: #3c4551;
+            border-radius: 8px;
             padding: 20px;
-            background-color: #121212; /* Ciemne tło dla całego ciała strony */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .input-container input {
+            padding: 10px;
+            width: 80%;
+            font-size: 16px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #666;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .input-container button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .input-container button:hover {
+            background-color: #45a049;
         }
 
         .output {
-            padding-left: 10px;
-            border-left: 3px solid #0ff;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #444;
+            color: #0ff;
+            font-size: 18px;
+            display: none;
         }
 
     </style>
 </head>
 <body>
+
     <h1>Operatory w PHP</h1>
-    
+
     <div class="section">
         <h2>1. Operatory arytmetyczne</h2>
-        <button class="toggle-button" onclick="toggleCode('arithmetics')">Pokaż kod</button>
-        <div id="arithmetics" style="display: none;">
-            <pre><code>
-$a = 10;
-$b = 5;
-$sum = $a + $b; // Wynik: 15
-$difference = $a - $b; // Wynik: 5
-$product = $a * $b; // Wynik: 50
-$quotient = $a / $b; // Wynik: 2
-$remainder = $a % $b; // Wynik: 0
-$exponentiation = $a ** $b; // Wynik: 100000
-            </code></pre>
+        <button class="toggle-button" onclick="toggleInput('arithmetics')">Oblicz sumę i różnicę</button>
+        <div id="arithmetics" class="input-container">
+            <input type="number" id="num1" placeholder="Podaj liczbę A" />
+            <input type="number" id="num2" placeholder="Podaj liczbę B" />
+            <button onclick="calculateArithmetic()">Oblicz</button>
         </div>
+        <div id="arithmetics-output" class="output"></div>
     </div>
 
     <div class="section">
         <h2>2. Operatory porównania</h2>
-        <button class="toggle-button" onclick="toggleCode('comparison')">Pokaż kod</button>
-        <div id="comparison" style="display: none;">
-            <pre><code>
-$isEqual = ($a == $b); // Wynik: false
-$isIdentical = ($a === $b); // Wynik: false
-$isNotEqual = ($a != $b); // Wynik: true
-$isNotIdentical = ($a !== $b); // Wynik: true
-$isGreaterThan = ($a > $b); // Wynik: true
-$isLessThan = ($a < $b); // Wynik: false
-$isGreaterThanOrEqual = ($a >= $b); // Wynik: true
-$isLessThanOrEqual = ($a <= $b); // Wynik: false
-            </code></pre>
+        <button class="toggle-button" onclick="toggleInput('comparison')">Porównaj liczby</button>
+        <div id="comparison" class="input-container">
+            <input type="number" id="comp1" placeholder="Podaj liczbę A" />
+            <input type="number" id="comp2" placeholder="Podaj liczbę B" />
+            <button onclick="compareNumbers()">Porównaj</button>
         </div>
+        <div id="comparison-output" class="output"></div>
     </div>
-
-    <div class="section">
-        <h2>3. Operatory logiczne</h2>
-        <button class="toggle-button" onclick="toggleCode('logical')">Pokaż kod</button>
-        <div id="logical" style="display: none;">
-            <pre><code>
-$and = ($a > 5 && $b < 10); // Wynik: true
-$or = ($a > 5 || $b < 10);  // Wynik: true
-$not = !($a > 5);            // Wynik: false
-            </code></pre>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>4. Operatory przypisania</h2>
-        <button class="toggle-button" onclick="toggleCode('assignment')">Pokaż kod</button>
-        <div id="assignment" style="display: none;">
-            <pre><code>
-$x = 5;
-$x += 2;  // Wynik: 7
-$x -= 3;  // Wynik: 4
-$x *= 4;  // Wynik: 16
-$x /= 2;  // Wynik: 8
-$x %= 3;  // Wynik: 2
-$x .= " test"; // Wynik: 2 test
-            </code></pre>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>5. Operatory inkrementacji i dekrementacji</h2>
-        <button class="toggle-button" onclick="toggleCode('increment')">Pokaż kod</button>
-        <div id="increment" style="display: none;">
-            <pre><code>
-$y = 1;
-$y++; // Wynik: 2 (inkrementacja)
-$y--; // Wynik: 1 (dekrementacja)
-            </code></pre>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>6. Operator typu (rzutowanie)</h2>
-        <button class="toggle-button" onclick="toggleCode('typecast')">Pokaż kod</button>
-        <div id="typecast" style="display: none;">
-            <pre><code>
-$z = (int) 3.14;  // Wynik: 3
-$w = (bool) 1;    // Wynik: true
-            </code></pre>
-        </div>
-    </div>
-
-    <h2>Podsumowanie</h2>
-    <p>PHP oferuje szeroką gamę operatorów, które umożliwiają wykonywanie różnych operacji na danych. W zależności od potrzeb można używać operatorów arytmetycznych, logicznych, przypisania oraz porównania. Poznanie i zrozumienie tych operatorów jest kluczowe do efektywnego programowania w PHP.</p>
 
     <script>
-        function toggleCode(id) {
-            var codeBlock = document.getElementById(id);
-            if (codeBlock.style.display === "none") {
-                codeBlock.style.display = "block";
-            } else {
-                codeBlock.style.display = "none";
+        // Toggle visibility of input container
+        function toggleInput(id) {
+            var inputContainer = document.getElementById(id);
+            inputContainer.style.display = (inputContainer.style.display === 'none' || inputContainer.style.display === '') ? 'block' : 'none';
+        }
+
+        // Calculate arithmetic operations: sum and difference
+        function calculateArithmetic() {
+            var num1 = parseFloat(document.getElementById('num1').value);
+            var num2 = parseFloat(document.getElementById('num2').value);
+            if (isNaN(num1) || isNaN(num2)) {
+                alert("Proszę wprowadzić liczby!");
+                return;
             }
+
+            var sum = num1 + num2;
+            var difference = num1 - num2;
+
+            var output = document.getElementById('arithmetics-output');
+            output.style.display = 'block';
+            output.innerHTML = `Suma: ${sum} <br> Różnica: ${difference}`;
+        }
+
+        // Compare numbers
+        function compareNumbers() {
+            var num1 = parseFloat(document.getElementById('comp1').value);
+            var num2 = parseFloat(document.getElementById('comp2').value);
+            if (isNaN(num1) || isNaN(num2)) {
+                alert("Proszę wprowadzić liczby!");
+                return;
+            }
+
+            var result = "";
+            if (num1 == num2) {
+                result = "Liczby są równe.";
+            } else if (num1 > num2) {
+                result = "Liczba A jest większa od liczby B.";
+            } else {
+                result = "Liczba A jest mniejsza od liczby B.";
+            }
+
+            var output = document.getElementById('comparison-output');
+            output.style.display = 'block';
+            output.innerHTML = result;
         }
     </script>
+
 </body>
 </html>
