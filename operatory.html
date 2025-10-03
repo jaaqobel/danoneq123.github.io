@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operatory w PHP</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Operatory w PHP - Interaktywnie</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #2a2b3c; /* Nowoczesne ciemno-niebieskie tło */
+            background-color: #2a2b3c;
             color: #f1f1f1;
             margin: 0;
             padding: 20px;
@@ -63,7 +63,7 @@
 
         .input-container button {
             padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: #4caf50;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -83,13 +83,13 @@
             color: #0ff;
             font-size: 18px;
             display: none;
+            white-space: pre-line;
         }
-
     </style>
 </head>
 <body>
 
-    <h1>Operatory w PHP</h1>
+    <h1>Operatory w PHP - Interaktywnie</h1>
 
     <!-- Operatory Arytmetyczne -->
     <div class="section">
@@ -161,119 +161,147 @@
     </div>
 
     <script>
-        // Toggle visibility of input container
         function toggleInput(id) {
-            var inputContainer = document.getElementById(id);
-            inputContainer.style.display = (inputContainer.style.display === 'none' || inputContainer.style.display === '') ? 'block' : 'none';
-        }
-
-        // Calculate arithmetic operations: sum and difference
-        function calculateArithmetic() {
-            var num1 = parseFloat(document.getElementById('num1').value);
-            var num2 = parseFloat(document.getElementById('num2').value);
-            if (isNaN(num1) || isNaN(num2)) {
-                alert("Proszę wprowadzić liczby!");
-                return;
-            }
-
-            var sum = num1 + num2;
-            var difference = num1 - num2;
-
-            var output = document.getElementById('arithmetics-output');
-            output.style.display = 'block';
-            output.innerHTML = `Suma: ${sum} <br> Różnica: ${difference}`;
-        }
-
-        // Compare numbers
-        function compareNumbers() {
-            var num1 = parseFloat(document.getElementById('comp1').value);
-            var num2 = parseFloat(document.getElementById('comp2').value);
-            if (isNaN(num1) || isNaN(num2)) {
-                alert("Proszę wprowadzić liczby!");
-                return;
-            }
-
-            var result = "";
-            if (num1 == num2) {
-                result = "Liczby są równe.";
-            } else if (num1 > num2) {
-                result = "Liczba A jest większa od liczby B.";
+            const el = document.getElementById(id);
+            if (el.style.display === 'block') {
+                el.style.display = 'none';
             } else {
-                result = "Liczba A jest mniejsza od liczby B.";
-            }
+                // Ukryj wszystkie inne input-container, żeby nie było wielu otwartych na raz
+                document.querySelectorAll('.input-container').forEach(c => c.style.display = 'none');
+                el.style.display = 'block';
 
-            var output = document.getElementById('comparison-output');
-            output.style.display = 'block';
-            output.innerHTML = result;
+                // Ukryj też wszystkie outputy przy zmianie sekcji
+                document.querySelectorAll('.output').forEach(o => o.style.display = 'none');
+            }
         }
 
-        // Calculate logical operations
-        function calculateLogical() {
-            var num1 = parseFloat(document.getElementById('lognum1').value);
-            var num2 = parseFloat(document.getElementById('lognum2').value);
+        function calculateArithmetic() {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
             if (isNaN(num1) || isNaN(num2)) {
-                alert("Proszę wprowadzić liczby!");
+                alert('Proszę wprowadzić poprawne liczby!');
+                return;
+            }
+            const sum = num1 + num2;
+            const difference = num1 - num2;
+            const product = num1 * num2;
+            const quotient = num2 !== 0 ? (num1 / num2).toFixed(2) : 'Nie można dzielić przez zero';
+            const remainder = num2 !== 0 ? (num1 % num2) : 'Nie można dzielić przez zero';
+            const exponentiation = Math.pow(num1, num2);
+
+            const output = document.getElementById('arithmetics-output');
+            output.style.display = 'block';
+            output.innerText = 
+                `Suma: ${sum}
+Różnica: ${difference}
+Iloczyn: ${product}
+Iloraz: ${quotient}
+Reszta z dzielenia: ${remainder}
+Potęgowanie: ${exponentiation}`;
+        }
+
+        function compareNumbers() {
+            const num1 = parseFloat(document.getElementById('comp1').value);
+            const num2 = parseFloat(document.getElementById('comp2').value);
+            if (isNaN(num1) || isNaN(num2)) {
+                alert('Proszę wprowadzić poprawne liczby!');
+                return;
+            }
+            let result = '';
+            result += `Równe (==): ${num1 == num2}\n`;
+            result += `Identyczne (===): ${num1 === num2}\n`;
+            result += `Nierówne (!=): ${num1 != num2}\n`;
+            result += `Nieidentyczne (!==): ${num1 !== num2}\n`;
+            result += `Większe (>): ${num1 > num2}\n`;
+            result += `Mniejsze (<): ${num1 < num2}\n`;
+            result += `Większe lub równe (>=): ${num1 >= num2}\n`;
+            result += `Mniejsze lub równe (<=): ${num1 <= num2}`;
+
+            const output = document.getElementById('comparison-output');
+            output.style.display = 'block';
+            output.innerText = result;
+        }
+
+        function calculateLogical() {
+            const num1 = parseFloat(document.getElementById('lognum1').value);
+            const num2 = parseFloat(document.getElementById('lognum2').value);
+            if (isNaN(num1) || isNaN(num2)) {
+                alert('Proszę wprowadzić poprawne liczby!');
                 return;
             }
 
-            var and = (num1 > 5 && num2 < 10);
-            var or = (num1 > 5 || num2 < 10);
-            var not = !(num1 > 5);
+            // Przykładowe operacje logiczne jak w PHP (tutaj w JS):
+            const and = (num1 > 5 && num2 < 10);
+            const or = (num1 > 5 || num2 < 10);
+            const not = !(num1 > 5);
 
-            var output = document.getElementById('logical-output');
+            const output = document.getElementById('logical-output');
             output.style.display = 'block';
-            output.innerHTML = `AND: ${and} <br> OR: ${or} <br> NOT: ${not}`;
+            output.innerText = `AND (num1 > 5 && num2 < 10): ${and}\nOR (num1 > 5 || num2 < 10): ${or}\nNOT (!(num1 > 5)): ${not}`;
         }
 
-        // Calculate assignment operations
         function calculateAssignment() {
-            var num1 = parseFloat(document.getElementById('assignnum1').value);
-            if (isNaN(num1)) {
-                alert("Proszę wprowadzić liczbę!");
+            let num = parseFloat(document.getElementById('assignnum1').value);
+            if (isNaN(num)) {
+                alert('Proszę wprowadzić poprawną liczbę!');
                 return;
             }
 
-            var result = num1;
-            result += 5;
-            result -= 3;
-            result *= 2;
-            result /= 4;
+            let original = num;
+            num += 2;
+            const afterPlus = num;
+            num -= 3;
+            const afterMinus = num;
+            num *= 4;
+            const afterMultiply = num;
+            num /= 2;
+            const afterDivide = num;
+            num %= 3;
+            const afterModulo = num;
 
-            var output = document.getElementById('assignment-output');
+            const output = document.getElementById('assignment-output');
             output.style.display = 'block';
-            output.innerHTML = `Wynik operacji przypisania: ${result}`;
+            output.innerText = 
+                `Pierwotna wartość: ${original}
+Po += 2: ${afterPlus}
+Po -= 3: ${afterMinus}
+Po *= 4: ${afterMultiply}
+Po /= 2: ${afterDivide}
+Po %= 3: ${afterModulo}`;
         }
 
-        // Incrementation and Decrementation
         function incrementDecrement() {
-            var num = parseFloat(document.getElementById('incnum').value);
+            let num = parseFloat(document.getElementById('incnum').value);
             if (isNaN(num)) {
-                alert("Proszę wprowadzić liczbę!");
+                alert('Proszę wprowadzić poprawną liczbę!');
                 return;
             }
+            // Inkrementacja i dekrementacja postinkrementacyjna w JS
+            let afterIncrement = num + 1;
+            let afterDecrement = afterIncrement - 1;
 
-            var incremented = num++;
-            var decremented = num--;
-
-            var output = document.getElementById('increment-output');
+            const output = document.getElementById('increment-output');
             output.style.display = 'block';
-            output.innerHTML = `Po inkrementacji: ${incremented} <br> Po dekrementacji: ${decremented}`;
+            output.innerText = `Oryginalna wartość: ${num}\nPo inkrementacji (++): ${afterIncrement}\nPo dekrementacji (--): ${afterDecrement}`;
         }
 
-        // Type casting
         function typeCast() {
-            var num = parseFloat(document.getElementById('castnum').value);
-            if (isNaN(num)) {
-                alert("Proszę wprowadzić liczbę!");
+            const val = document.getElementById('castnum').value;
+            if (val.trim() === '') {
+                alert('Proszę wprowadzić wartość!');
                 return;
             }
 
-            var castedInt = (int)num;
-            var castedBool = (num > 0);
+            // W JS nie ma dokładnego rzutowania jak w PHP, ale można zasymulować:
+            const num = Number(val);
+            const intVal = parseInt(val);
+            const boolVal = Boolean(num);
 
-            var output = document.getElementById('typecast-output');
+            const output = document.getElementById('typecast-output');
             output.style.display = 'block';
-            output.innerHTML = `Rzutowanie na int: ${castedInt} <br> Rzutowanie na bool: ${castedBool}`;
+            output.innerText = `Wartość oryginalna: ${val}
+Rzutowanie na int: ${intVal}
+Rzutowanie na bool: ${boolVal}`;
         }
     </script>
 
