@@ -91,6 +91,7 @@
 
     <h1>Operatory w PHP</h1>
 
+    <!-- Operatory Arytmetyczne -->
     <div class="section">
         <h2>1. Operatory arytmetyczne</h2>
         <button class="toggle-button" onclick="toggleInput('arithmetics')">Oblicz sumę i różnicę</button>
@@ -102,6 +103,7 @@
         <div id="arithmetics-output" class="output"></div>
     </div>
 
+    <!-- Operatory Porównania -->
     <div class="section">
         <h2>2. Operatory porównania</h2>
         <button class="toggle-button" onclick="toggleInput('comparison')">Porównaj liczby</button>
@@ -111,6 +113,51 @@
             <button onclick="compareNumbers()">Porównaj</button>
         </div>
         <div id="comparison-output" class="output"></div>
+    </div>
+
+    <!-- Operatory Logiczne -->
+    <div class="section">
+        <h2>3. Operatory logiczne</h2>
+        <button class="toggle-button" onclick="toggleInput('logical')">Oblicz operacje logiczne</button>
+        <div id="logical" class="input-container">
+            <input type="number" id="lognum1" placeholder="Podaj liczbę A" />
+            <input type="number" id="lognum2" placeholder="Podaj liczbę B" />
+            <button onclick="calculateLogical()">Oblicz</button>
+        </div>
+        <div id="logical-output" class="output"></div>
+    </div>
+
+    <!-- Operatory Przypisania -->
+    <div class="section">
+        <h2>4. Operatory przypisania</h2>
+        <button class="toggle-button" onclick="toggleInput('assignment')">Oblicz operacje przypisania</button>
+        <div id="assignment" class="input-container">
+            <input type="number" id="assignnum1" placeholder="Podaj liczbę A" />
+            <button onclick="calculateAssignment()">Oblicz</button>
+        </div>
+        <div id="assignment-output" class="output"></div>
+    </div>
+
+    <!-- Operatory Inkrementacji / Dekrementacji -->
+    <div class="section">
+        <h2>5. Operatory inkrementacji i dekrementacji</h2>
+        <button class="toggle-button" onclick="toggleInput('increment')">Inkrementuj i dekrementuj</button>
+        <div id="increment" class="input-container">
+            <input type="number" id="incnum" placeholder="Podaj liczbę" />
+            <button onclick="incrementDecrement()">Oblicz</button>
+        </div>
+        <div id="increment-output" class="output"></div>
+    </div>
+
+    <!-- Rzutowanie typów -->
+    <div class="section">
+        <h2>6. Operator typu (rzutowanie)</h2>
+        <button class="toggle-button" onclick="toggleInput('typecast')">Rzutuj typ</button>
+        <div id="typecast" class="input-container">
+            <input type="number" id="castnum" placeholder="Podaj liczbę" />
+            <button onclick="typeCast()">Rzutuj</button>
+        </div>
+        <div id="typecast-output" class="output"></div>
     </div>
 
     <script>
@@ -158,6 +205,75 @@
             var output = document.getElementById('comparison-output');
             output.style.display = 'block';
             output.innerHTML = result;
+        }
+
+        // Calculate logical operations
+        function calculateLogical() {
+            var num1 = parseFloat(document.getElementById('lognum1').value);
+            var num2 = parseFloat(document.getElementById('lognum2').value);
+            if (isNaN(num1) || isNaN(num2)) {
+                alert("Proszę wprowadzić liczby!");
+                return;
+            }
+
+            var and = (num1 > 5 && num2 < 10);
+            var or = (num1 > 5 || num2 < 10);
+            var not = !(num1 > 5);
+
+            var output = document.getElementById('logical-output');
+            output.style.display = 'block';
+            output.innerHTML = `AND: ${and} <br> OR: ${or} <br> NOT: ${not}`;
+        }
+
+        // Calculate assignment operations
+        function calculateAssignment() {
+            var num1 = parseFloat(document.getElementById('assignnum1').value);
+            if (isNaN(num1)) {
+                alert("Proszę wprowadzić liczbę!");
+                return;
+            }
+
+            var result = num1;
+            result += 5;
+            result -= 3;
+            result *= 2;
+            result /= 4;
+
+            var output = document.getElementById('assignment-output');
+            output.style.display = 'block';
+            output.innerHTML = `Wynik operacji przypisania: ${result}`;
+        }
+
+        // Incrementation and Decrementation
+        function incrementDecrement() {
+            var num = parseFloat(document.getElementById('incnum').value);
+            if (isNaN(num)) {
+                alert("Proszę wprowadzić liczbę!");
+                return;
+            }
+
+            var incremented = num++;
+            var decremented = num--;
+
+            var output = document.getElementById('increment-output');
+            output.style.display = 'block';
+            output.innerHTML = `Po inkrementacji: ${incremented} <br> Po dekrementacji: ${decremented}`;
+        }
+
+        // Type casting
+        function typeCast() {
+            var num = parseFloat(document.getElementById('castnum').value);
+            if (isNaN(num)) {
+                alert("Proszę wprowadzić liczbę!");
+                return;
+            }
+
+            var castedInt = (int)num;
+            var castedBool = (num > 0);
+
+            var output = document.getElementById('typecast-output');
+            output.style.display = 'block';
+            output.innerHTML = `Rzutowanie na int: ${castedInt} <br> Rzutowanie na bool: ${castedBool}`;
         }
     </script>
 
