@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>22 zdarzenia JavaScript — przykłady interaktywne</title>
+  <title>22 zdarzenia JavaScript — interaktywne</title>
 
   <!-- Fonty -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,7 +63,7 @@
     }
 
     .card h3 {
-      margin: 0 0 8px 0;
+      margin: 0 0 4px 0;
       color: #e8f5e9;
       font-size: 1.05rem;
     }
@@ -71,7 +71,14 @@
     .desc {
       font-size: 0.9rem;
       color: #d0d0d0;
-      margin-bottom: 10px;
+      margin-bottom: 4px;
+    }
+
+    .small-desc {
+      font-size: 0.75rem;
+      color: #bdbdbd;
+      margin-bottom: 8px;
+      display: block;
     }
 
     .controls {
@@ -115,11 +122,6 @@
 
     textarea { min-height: 70px; resize: vertical; }
 
-    .small {
-      font-size: 0.85rem;
-      color: #bdbdbd;
-    }
-
     footer {
       margin-top: 18px;
       text-align: center;
@@ -141,474 +143,285 @@
 
     <main class="grid">
 
-      <!-- 1 onAbort -->
-      <div class="card" id="card-onAbort">
-        <div>
-          <h3>onAbort</h3>
-          <div class="desc">Zdarzenie wywołane, gdy ładowanie obrazu zostanie przerwane (np. usunięto src). Kliknij "Wczytaj obraz", potem "Przerwij ładowanie".</div>
-          <div class="controls">
-            <button class="btn" id="loadImgBtn">Wczytaj obraz</button>
-            <button class="btn secondary" id="abortImgBtn">Przerwij ładowanie</button>
-            <img id="abortImage" alt="demo" style="max-width:80px; border-radius:6px; display:none;">
-          </div>
-        </div>
-        <div class="result" id="res-onAbort">Wynik: —</div>
-      </div>
-
-      <!-- 2 onBlur -->
-      <div class="card" id="card-onBlur">
-        <div>
-          <h3>onBlur</h3>
-          <div class="desc">Wywołuje się, gdy pole traci fokus (klikniesz poza nim). Wprowadź tekst, kliknij poza polem.</div>
-          <div class="controls">
-            <input id="blurInput" type="text" placeholder="Kliknij, wpisz, a potem kliknij poza..." />
-          </div>
-        </div>
-        <div class="result" id="res-onBlur">Wynik: —</div>
-      </div>
-
-      <!-- 3 onChange -->
-      <div class="card" id="card-onChange">
-        <div>
-          <h3>onChange</h3>
-          <div class="desc">Wywołuje się po zmianie wartości (np. select, input) po utracie focusa.</div>
-          <div class="controls">
-            <select id="changeSelect">
-              <option value="">-- wybierz --</option>
-              <option value="A">Opcja A</option>
-              <option value="B">Opcja B</option>
-              <option value="C">Opcja C</option>
-            </select>
-          </div>
-        </div>
-        <div class="result" id="res-onChange">Wynik: —</div>
-      </div>
-
-      <!-- 4 onClick -->
-      <div class="card" id="card-onClick">
-        <div>
-          <h3>onClick</h3>
-          <div class="desc">Najpopularniejsze zdarzenie — kliknij przycisk.</div>
-          <div class="controls">
-            <button class="btn" id="clickBtn">Kliknij mnie</button>
-          </div>
+      <!-- 1 onClick -->
+      <div class="card">
+        <h3>1. onClick</h3>
+        <span class="small-desc">Wywołuje się po kliknięciu elementu.</span>
+        <div class="controls">
+          <button class="btn" id="clickBtn">Kliknij mnie</button>
         </div>
         <div class="result" id="res-onClick">Wynik: —</div>
       </div>
 
-      <!-- 5 onDblClick -->
-      <div class="card" id="card-onDblClick">
-        <div>
-          <h3>onDblClick</h3>
-          <div class="desc">Podwójne kliknięcie elementu. Kliknij dwukrotnie żółty prostokąt.</div>
-          <div class="controls">
-            <div id="dblBox" style="background:#e0a800;padding:14px;border-radius:6px;cursor:pointer;">Dwukliknij mnie</div>
-          </div>
+      <!-- 2 onDblClick -->
+      <div class="card">
+        <h3>2. onDblClick</h3>
+        <span class="small-desc">Wywołuje się po podwójnym kliknięciu elementu.</span>
+        <div class="controls">
+          <div id="dblBox" style="background:#e0a800;padding:14px;border-radius:6px;cursor:pointer;">Dwukliknij mnie</div>
         </div>
         <div class="result" id="res-onDblClick">Wynik: —</div>
       </div>
 
-      <!-- 6 onDrag / onDrop -->
-      <div class="card" id="card-onDragDrop">
-        <div>
-          <h3>onDrag &amp; onDrop</h3>
-          <div class="desc">Przeciągnij element (z lewej) do strefy upuszczenia (po prawej).</div>
-          <div class="controls">
-            <div id="dragItem" draggable="true" style="padding:10px;background:#555;border-radius:6px;cursor:grab;">Przeciągnij mnie</div>
-            <div id="dropZone" style="padding:18px;background:#222;border:2px dashed #555;border-radius:6px;margin-left:6px;min-width:110px;text-align:center;">Upuść tutaj</div>
-          </div>
-        </div>
-        <div class="result" id="res-onDragDrop">Wynik: —</div>
-      </div>
-
-      <!-- 7 onError -->
-      <div class="card" id="card-onError">
-        <div>
-          <h3>onError</h3>
-          <div class="desc">Błąd podczas ładowania zasobu. Kliknij przycisk, by spróbować wczytać nieistniejący obraz.</div>
-          <div class="controls">
-            <button class="btn" id="errLoadBtn">Wczytaj błędny obraz</button>
-            <img id="errImg" style="max-width:80px;border-radius:6px;display:none;" alt="błąd" />
-          </div>
-        </div>
-        <div class="result" id="res-onError">Wynik: —</div>
-      </div>
-
-      <!-- 8 onFocus -->
-      <div class="card" id="card-onFocus">
-        <div>
-          <h3>onFocus</h3>
-          <div class="desc">Wywołuje się przy wejściu w pole (fokus). Kliknij w pole, by uruchomić.</div>
-          <div class="controls">
-            <input id="focusInput" type="text" placeholder="Kliknij, by zobaczyć efekt" />
-          </div>
-        </div>
-        <div class="result" id="res-onFocus">Wynik: —</div>
-      </div>
-
-      <!-- 9 onKeyDown -->
-      <div class="card" id="card-onKeyDown">
-        <div>
-          <h3>onKeyDown</h3>
-          <div class="desc">Naciśnięcie klawisza (pierwszy etap). Naciśnij dowolny klawisz w polu poniżej.</div>
-          <div class="controls">
-            <input id="keyDownInput" type="text" placeholder="Naciśnij klawisz..." />
-          </div>
-        </div>
-        <div class="result" id="res-onKeyDown">Wynik: —</div>
-      </div>
-
-      <!-- 10 onKeyPress -->
-      <div class="card" id="card-onKeyPress">
-        <div>
-          <h3>onKeyPress</h3>
-          <div class="desc">Naciśnięcie znaku (przestarzałe w niektórych przypadkach). Spróbuj wpisywać znaki.</div>
-          <div class="controls">
-            <input id="keyPressInput" type="text" placeholder="Wpisz coś..." />
-          </div>
-        </div>
-        <div class="result" id="res-onKeyPress">Wynik: —</div>
-      </div>
-
-      <!-- 11 onKeyUp -->
-      <div class="card" id="card-onKeyUp">
-        <div>
-          <h3>onKeyUp</h3>
-          <div class="desc">Zwolnienie klawisza - często używane do walidacji podczas pisania.</div>
-          <div class="controls">
-            <input id="keyUpInput" type="text" placeholder="Wpisuj..." />
-          </div>
-        </div>
-        <div class="result" id="res-onKeyUp">Wynik: —</div>
-      </div>
-
-      <!-- 12 onLoad -->
-      <div class="card" id="card-onLoad">
-        <div>
-          <h3>onLoad</h3>
-          <div class="desc">Zdarzenie wywoływane po załadowaniu strony/zasobu. Po otwarciu strony zobaczysz komunikat w tej karcie.</div>
-          <div class="controls">
-            <button class="btn" id="refreshLoadBtn">Odśwież komunikat</button>
-          </div>
-        </div>
-        <div class="result" id="res-onLoad">Wynik: —</div>
-      </div>
-
-      <!-- 13 onMouseDown -->
-      <div class="card" id="card-onMouseDown">
-        <div>
-          <h3>onMouseDown</h3>
-          <div class="desc">Naciśnięcie przycisku myszy (before click). Przytrzymaj i puść.</div>
-          <div class="controls">
-            <button class="btn" id="mouseDownBtn">Naciśnij mysz</button>
-          </div>
-        </div>
-        <div class="result" id="res-onMouseDown">Wynik: —</div>
-      </div>
-
-      <!-- 14 onMouseOut -->
-      <div class="card" id="card-onMouseOut">
-        <div>
-          <h3>onMouseOut</h3>
-          <div class="desc">Kursor opuścił dany element. Najedź na box i potem odejdź kursorem.</div>
-          <div class="controls">
-            <div id="outBox" style="padding:14px;background:#444;border-radius:6px;">Najedź i odejdź</div>
-          </div>
-        </div>
-        <div class="result" id="res-onMouseOut">Wynik: —</div>
-      </div>
-
-      <!-- 15 onMouseOver -->
-      <div class="card" id="card-onMouseOver">
-        <div>
-          <h3>onMouseOver</h3>
-          <div class="desc">Kursor najechał na element. Najedź kursorem na obszar.</div>
-          <div class="controls">
-            <div id="overBox" style="padding:14px;background:#444;border-radius:6px;">Najedź na mnie</div>
-          </div>
+      <!-- 3 onMouseOver -->
+      <div class="card">
+        <h3>3. onMouseOver</h3>
+        <span class="small-desc">Wywołuje się, gdy kursor znajdzie się nad elementem.</span>
+        <div class="controls">
+          <div id="overBox" style="padding:14px;background:#444;border-radius:6px;">Najedź na mnie</div>
         </div>
         <div class="result" id="res-onMouseOver">Wynik: —</div>
       </div>
 
-      <!-- 16 onMouseUp -->
-      <div class="card" id="card-onMouseUp">
-        <div>
-          <h3>onMouseUp</h3>
-          <div class="desc">Zwolnienie przycisku myszy po naciśnięciu (po onMouseDown).</div>
-          <div class="controls">
-            <button class="btn" id="mouseUpBtn">Naciśnij i puść</button>
-          </div>
+      <!-- 4 onMouseOut -->
+      <div class="card">
+        <h3>4. onMouseOut</h3>
+        <span class="small-desc">Wywołuje się, gdy kursor opuszcza element.</span>
+        <div class="controls">
+          <div id="outBox" style="padding:14px;background:#444;border-radius:6px;">Najedź i odejdź</div>
+        </div>
+        <div class="result" id="res-onMouseOut">Wynik: —</div>
+      </div>
+
+      <!-- 5 onMouseDown -->
+      <div class="card">
+        <h3>5. onMouseDown</h3>
+        <span class="small-desc">Wywołuje się po naciśnięciu przycisku myszy.</span>
+        <div class="controls">
+          <button class="btn" id="mouseDownBtn">Naciśnij mysz</button>
+        </div>
+        <div class="result" id="res-onMouseDown">Wynik: —</div>
+      </div>
+
+      <!-- 6 onMouseUp -->
+      <div class="card">
+        <h3>6. onMouseUp</h3>
+        <span class="small-desc">Wywołuje się po zwolnieniu przycisku myszy.</span>
+        <div class="controls">
+          <button class="btn" id="mouseUpBtn">Naciśnij i puść</button>
         </div>
         <div class="result" id="res-onMouseUp">Wynik: —</div>
       </div>
 
-      <!-- 17 onMouseMove -->
-      <div class="card" id="card-onMouseMove">
-        <div>
-          <h3>onMouseMove</h3>
-          <div class="desc">Poruszanie kursorem w obrębie elementu. Porusz myszką nad polem - pokażę koordynaty.</div>
-          <div class="controls">
-            <div id="moveArea" style="padding:30px;background:#222;border-radius:6px;border:1px solid #444;">Porusz myszką tutaj</div>
-          </div>
+      <!-- 7 onMouseMove -->
+      <div class="card">
+        <h3>7. onMouseMove</h3>
+        <span class="small-desc">Wywołuje się przy poruszaniu kursorem nad elementem.</span>
+        <div class="controls">
+          <div id="moveArea" style="padding:30px;background:#222;border-radius:6px;border:1px solid #444;">Porusz myszką tutaj</div>
         </div>
         <div class="result" id="res-onMouseMove">Wynik: —</div>
       </div>
 
-      <!-- 18 onReset -->
-      <div class="card" id="card-onReset">
-        <div>
-          <h3>onReset</h3>
-          <div class="desc">Reset formularza — przywraca wartości domyślne i wywołuje to zdarzenie.</div>
-          <div class="controls">
-            <form id="demoForm">
-              <input name="f1" value="abc" />
-              <button type="reset" class="btn">Resetuj formularz</button>
-            </form>
-          </div>
+      <!-- 8 onKeyDown -->
+      <div class="card">
+        <h3>8. onKeyDown</h3>
+        <span class="small-desc">Wywołuje się przy naciśnięciu klawisza (pierwszy etap).</span>
+        <div class="controls">
+          <input id="keyDownInput" type="text" placeholder="Naciśnij klawisz..." />
         </div>
-        <div class="result" id="res-onReset">Wynik: —</div>
+        <div class="result" id="res-onKeyDown">Wynik: —</div>
       </div>
 
-      <!-- 19 onResize -->
-      <div class="card" id="card-onResize">
-        <div>
-          <h3>onResize</h3>
-          <div class="desc">Zmiana rozmiaru okna. Zmień rozmiar okna (przeciągnij krawędź) — pokażę aktualne wymiary.</div>
-          <div class="controls small">
-            <span class="small">Zmiana rozmiaru okna automatycznie aktualizuje wynik.</span>
-          </div>
+      <!-- 9 onKeyPress -->
+      <div class="card">
+        <h3>9. onKeyPress</h3>
+        <span class="small-desc">Wywołuje się przy wpisaniu znaku (przestarzałe w niektórych przypadkach).</span>
+        <div class="controls">
+          <input id="keyPressInput" type="text" placeholder="Wpisz coś..." />
         </div>
-        <div class="result" id="res-onResize">Wynik: —</div>
+        <div class="result" id="res-onKeyPress">Wynik: —</div>
       </div>
 
-      <!-- 20 onSelect -->
-      <div class="card" id="card-onSelect">
-        <div>
-          <h3>onSelect</h3>
-          <div class="desc">Zdarzenie wyzwalane po zaznaczeniu tekstu w polu tekstowym.</div>
-          <div class="controls">
-            <textarea id="selectArea">Zaznacz fragment tego tekstu, aby wywołać zdarzenie select.</textarea>
-          </div>
+      <!-- 10 onKeyUp -->
+      <div class="card">
+        <h3>10. onKeyUp</h3>
+        <span class="small-desc">Wywołuje się po zwolnieniu klawisza, np. do walidacji wpisu.</span>
+        <div class="controls">
+          <input id="keyUpInput" type="text" placeholder="Wpisuj..." />
         </div>
-        <div class="result" id="res-onSelect">Wynik: —</div>
+        <div class="result" id="res-onKeyUp">Wynik: —</div>
       </div>
 
-      <!-- 21 onSubmit -->
-      <div class="card" id="card-onSubmit">
-        <div>
-          <h3>onSubmit</h3>
-          <div class="desc">Zatwierdzenie formularza. Kliknij "Wyślij" — formularz nie przeładuje strony (używamy preventDefault), ale zdarzenie zostanie obsłużone.</div>
-          <div class="controls">
-            <form id="submitForm">
-              <input name="name" placeholder="Twoje imię" />
-              <button type="submit" class="btn">Wyślij</button>
-            </form>
-          </div>
+      <!-- 11 onFocus -->
+      <div class="card">
+        <h3>11. onFocus</h3>
+        <span class="small-desc">Wywołuje się przy wejściu w pole (fokus).</span>
+        <div class="controls">
+          <input id="focusInput" type="text" placeholder="Kliknij, by zobaczyć efekt" />
+        </div>
+        <div class="result" id="res-onFocus">Wynik: —</div>
+      </div>
+
+      <!-- 12 onBlur -->
+      <div class="card">
+        <h3>12. onBlur</h3>
+        <span class="small-desc">Wywołuje się, gdy pole traci fokus.</span>
+        <div class="controls">
+          <input id="blurInput" type="text" placeholder="Kliknij, wpisz, a potem kliknij poza..." />
+        </div>
+        <div class="result" id="res-onBlur">Wynik: —</div>
+      </div>
+
+      <!-- 13 onChange -->
+      <div class="card">
+        <h3>13. onChange</h3>
+        <span class="small-desc">Wywołuje się po zmianie wartości i utracie focusa.</span>
+        <div class="controls">
+          <select id="changeSelect">
+            <option value="">-- wybierz --</option>
+            <option value="A">Opcja A</option>
+            <option value="B">Opcja B</option>
+            <option value="C">Opcja C</option>
+          </select>
+        </div>
+        <div class="result" id="res-onChange">Wynik: —</div>
+      </div>
+
+      <!-- 14 onSubmit -->
+      <div class="card">
+        <h3>14. onSubmit</h3>
+        <span class="small-desc">Wywołuje się po zatwierdzeniu formularza.</span>
+        <div class="controls">
+          <form id="submitForm">
+            <input name="name" placeholder="Twoje imię" />
+            <button type="submit" class="btn">Wyślij</button>
+          </form>
         </div>
         <div class="result" id="res-onSubmit">Wynik: —</div>
       </div>
 
-      <!-- 22 onUnload / beforeunload -->
-      <div class="card" id="card-onUnload">
-        <div>
-          <h3>onUnload / beforeunload</h3>
-          <div class="desc">Zdarzenie wywoływane przy zamykaniu/odświeżaniu strony. Przetestuj próbnie (przejdź do innej strony lub odśwież).</div>
-          <div class="controls small">
-            <span class="small">Uwaga: większość przeglądarek blokuje niestandardowe komunikaty w beforeunload.</span>
-          </div>
+      <!-- 15 onReset -->
+      <div class="card">
+        <h3>15. onReset</h3>
+        <span class="small-desc">Wywołuje się przy przywracaniu wartości domyślnych formularza.</span>
+        <div class="controls">
+          <form id="demoForm">
+            <input name="f1" value="abc" />
+            <button type="reset" class="btn">Resetuj formularz</button>
+          </form>
         </div>
+        <div class="result" id="res-onReset">Wynik: —</div>
+      </div>
+
+      <!-- 16 onLoad -->
+      <div class="card">
+        <h3>16. onLoad</h3>
+        <span class="small-desc">Wywołuje się po załadowaniu strony lub zasobu.</span>
+        <div class="controls">
+          <button class="btn" id="refreshLoadBtn">Odśwież komunikat</button>
+        </div>
+        <div class="result" id="res-onLoad">Wynik: —</div>
+      </div>
+
+      <!-- 17 onResize -->
+      <div class="card">
+        <h3>17. onResize</h3>
+        <span class="small-desc">Wywołuje się przy zmianie rozmiaru okna.</span>
+        <div class="result" id="res-onResize">Wynik: —</div>
+      </div>
+
+      <!-- 18 onSelect -->
+      <div class="card">
+        <h3>18. onSelect</h3>
+        <span class="small-desc">Wywołuje się po zaznaczeniu tekstu w polu.</span>
+        <div class="controls">
+          <textarea id="selectArea">Zaznacz fragment tego tekstu, aby wywołać zdarzenie select.</textarea>
+        </div>
+        <div class="result" id="res-onSelect">Wynik: —</div>
+      </div>
+
+      <!-- 19 onError -->
+      <div class="card">
+        <h3>19. onError</h3>
+        <span class="small-desc">Wywołuje się, gdy wystąpi błąd ładowania zasobu.</span>
+        <div class="controls">
+          <button class="btn" id="errLoadBtn">Wczytaj błędny obraz</button>
+          <img id="errImg" style="max-width:80px;border-radius:6px;display:none;" alt="błąd" />
+        </div>
+        <div class="result" id="res-onError">Wynik: —</div>
+      </div>
+
+      <!-- 20 onAbort -->
+      <div class="card">
+        <h3>20. onAbort</h3>
+        <span class="small-desc">Wywołuje się, gdy ładowanie obrazu zostanie przerwane.</span>
+        <div class="controls">
+          <button class="btn" id="loadImgBtn">Wczytaj obraz</button>
+          <button class="btn secondary" id="abortImgBtn">Przerwij ładowanie</button>
+          <img id="abortImage" alt="demo" style="max-width:80px; border-radius:6px; display:none;">
+        </div>
+        <div class="result" id="res-onAbort">Wynik: —</div>
+      </div>
+
+      <!-- 21 onDrag / onDrop -->
+      <div class="card">
+        <h3>21. onDrag / onDrop</h3>
+        <span class="small-desc">Wywołuje się przy przeciąganiu i upuszczaniu elementu.</span>
+        <div class="controls">
+          <div id="dragItem" draggable="true" style="padding:10px;background:#555;border-radius:6px;cursor:grab;">Przeciągnij mnie</div>
+          <div id="dropZone" style="padding:18px;background:#222;border:2px dashed #555;border-radius:6px;margin-left:6px;min-width:110px;text-align:center;">Upuść tutaj</div>
+        </div>
+        <div class="result" id="res-onDragDrop">Wynik: —</div>
+      </div>
+
+      <!-- 22 onUnload / beforeunload -->
+      <div class="card">
+        <h3>22. onUnload / beforeunload</h3>
+        <span class="small-desc">Wywołuje się przy zamykaniu lub odświeżaniu strony.</span>
         <div class="result" id="res-onUnload">Wynik: —</div>
       </div>
 
     </main>
 
     <footer>
-      <p>Przykłady: onAbort, onBlur, onChange, onClick, onDblClick, onDrag/Drop, onError, onFocus, onKeyDown, onKeyPress, onKeyUp, onLoad, onMouseDown, onMouseOut, onMouseOver, onMouseUp, onMouseMove, onReset, onResize, onSelect, onSubmit, onUnload</p>
+      <p>Przykłady 22 zdarzeń JavaScript — interaktywny przewodnik edukacyjny</p>
     </footer>
   </div>
 
-  <script>
-    /* Pomocniczne funkcje do aktualizacji wyników */
-    function setRes(id, text) {
-      document.getElementById(id).textContent = 'Wynik: ' + text;
-    }
+<script>
+  function setRes(id,text){document.getElementById(id).textContent='Wynik: '+text;}
 
-    /* 1) onAbort - obraz */
-    const abortImg = document.getElementById('abortImage');
-    document.getElementById('loadImgBtn').addEventListener('click', () => {
-      abortImg.style.display = 'inline-block';
-      // używamy dużego obrazu aby dać szansę na przerwanie - tutaj prosty src
-      abortImg.src = 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg';
-      setRes('res-onAbort', 'Rozpoczęto ładowanie...');
-    });
-    document.getElementById('abortImg').addEventListener('error', ()=>{}); // zapobiega błędom w konsoli (opcjonalne)
-    document.getElementById('abortImg').addEventListener('abort', () => {
-      setRes('res-onAbort', 'Ładowanie obrazu przerwane (onabort).');
-    });
-    // przycisk przerwania: usuwamy src — powinno wywołać onabort
-    document.getElementById('abortImgBtn').addEventListener('click', () => {
-      // jeżeli źródło jest ustawione, przerwij
-      if (abortImg && abortImg.src) {
-        abortImg.src = '';
-        setRes('res-onAbort', 'Wymuszone przerwanie ładowania (ustawiono pusty src).');
-      } else {
-        setRes('res-onAbort', 'Brak aktywnego ładowania obrazu.');
-      }
-    });
+  // 1-6, 8-12, 14-20, 21, 22
+  document.getElementById('clickBtn').addEventListener('click',()=>setRes('res-onClick','Kliknięto przycisk!'));
+  document.getElementById('dblBox').addEventListener('dblclick',()=>setRes('res-onDblClick','Wykryto podwójne kliknięcie!'));
+  document.getElementById('overBox').addEventListener('mouseover',()=>setRes('res-onMouseOver','Kursor nad elementem (mouseover).'));
+  document.getElementById('outBox').addEventListener('mouseout',()=>setRes('res-onMouseOut','Kursor opuścił element (mouseout).'));
+  document.getElementById('mouseDownBtn').addEventListener('mousedown',()=>setRes('res-onMouseDown','Naciśnięto przycisk myszy (mousedown).'));
+  document.getElementById('mouseUpBtn').addEventListener('mouseup',()=>setRes('res-onMouseUp','Zwolniono przycisk myszy (mouseup).'));
+  const moveArea=document.getElementById('moveArea');
+  moveArea.addEventListener('mousemove',e=>{const r=moveArea.getBoundingClientRect();setRes('res-onMouseMove',`x:${Math.floor(e.clientX-r.left)}, y:${Math.floor(e.clientY-r.top)}`)});
+  
+  const kd=document.getElementById('keyDownInput'); kd.addEventListener('keydown',e=>setRes('res-onKeyDown',e.key));
+  const kp=document.getElementById('keyPressInput'); kp.addEventListener('keypress',e=>setRes('res-onKeyPress',e.key));
+  const ku=document.getElementById('keyUpInput'); ku.addEventListener('keyup',e=>setRes('res-onKeyUp',e.key));
+  
+  const fi=document.getElementById('focusInput'); fi.addEventListener('focus',()=>setRes('res-onFocus','Pole w fokusie.'));
+  const bl=document.getElementById('blurInput'); bl.addEventListener('blur',()=>setRes('res-onBlur','Pole straciło fokus.'));
+  
+  const cs=document.getElementById('changeSelect'); cs.addEventListener('change',()=>setRes('res-onChange','Wybrano: '+cs.value));
+  
+  document.getElementById('submitForm').addEventListener('submit',e=>{e.preventDefault();setRes('res-onSubmit','Formularz wysłany!');});
+  document.getElementById('demoForm').addEventListener('reset',()=>setRes('res-onReset','Formularz zresetowany!'));
+  document.getElementById('refreshLoadBtn').addEventListener('click',()=>setRes('res-onLoad','Strona/zasób załadowany!'));
 
-    /* 2) onBlur */
-    document.getElementById('blurInput').addEventListener('blur', (e) => {
-      setRes('res-onBlur', 'Pole straciło fokus. Wartość: "' + e.target.value + '"');
-    });
+  window.addEventListener('resize',()=>setRes('res-onResize','Rozmiar okna zmieniony!'));
 
-    /* 3) onChange */
-    document.getElementById('changeSelect').addEventListener('change', (e) => {
-      setRes('res-onChange', 'Wybrano: ' + e.target.value);
-    });
+  const sel=document.getElementById('selectArea'); sel.addEventListener('select',()=>setRes('res-onSelect','Tekst został zaznaczony.'));
 
-    /* 4) onClick */
-    document.getElementById('clickBtn').addEventListener('click', () => {
-      setRes('res-onClick', 'Kliknięto przycisk!');
-    });
+  const errBtn=document.getElementById('errLoadBtn'); const errImg=document.getElementById('errImg');
+  errBtn.addEventListener('click',()=>{errImg.src='wrong_image.png'; errImg.style.display='block'; errImg.onerror=()=>setRes('res-onError','Błąd ładowania obrazka!');});
 
-    /* 5) onDblClick */
-    document.getElementById('dblBox').addEventListener('dblclick', () => {
-      setRes('res-onDblClick', 'Wykryto podwójne kliknięcie!');
-    });
+  const loadImg=document.getElementById('loadImgBtn'); const abortImg=document.getElementById('abortImage');
+  loadImg.addEventListener('click',()=>{abortImg.src='https://via.placeholder.com/80'; abortImg.style.display='block'; setRes('res-onAbort','Obraz ładuje się...');});
+  document.getElementById('abortImgBtn').addEventListener('click',()=>{abortImg.src=''; setRes('res-onAbort','Ładowanie przerwane!');});
 
-    /* 6) onDrag / onDrop */
-    const dragItem = document.getElementById('dragItem');
-    const dropZone = document.getElementById('dropZone');
-    dragItem.addEventListener('dragstart', (e) => {
-      e.dataTransfer.setData('text/plain', 'przeciagany');
-      setRes('res-onDragDrop', 'Rozpoczęto przeciąganie.');
-    });
-    dropZone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-    });
-    dropZone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      setRes('res-onDragDrop', 'Upuszczono element w strefie.');
-    });
+  const dragItem=document.getElementById('dragItem'); const dropZone=document.getElementById('dropZone');
+  dragItem.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain','dragged');});
+  dropZone.addEventListener('dragover',e=>{e.preventDefault();});
+  dropZone.addEventListener('drop',e=>{e.preventDefault(); setRes('res-onDragDrop','Element upuszczony!');});
 
-    /* 7) onError */
-    const errImg = document.getElementById('errImg');
-    document.getElementById('errLoadBtn').addEventListener('click', () => {
-      errImg.style.display = 'inline-block';
-      // ustawiamy nieistniejący URL, żeby wymusić błąd
-      errImg.src = 'https://example.invalid/this-image-does-not-exist.png';
-      setRes('res-onError', 'Próba wczytania obrazu...');
-    });
-    errImg.addEventListener('error', () => {
-      setRes('res-onError', 'Błąd ładowania obrazu (onerror).');
-      errImg.style.display = 'none';
-    });
-
-    /* 8) onFocus */
-    document.getElementById('focusInput').addEventListener('focus', (e) => {
-      setRes('res-onFocus', 'Pole otrzymało fokus.');
-    });
-
-    /* 9) onKeyDown */
-    document.getElementById('keyDownInput').addEventListener('keydown', (e) => {
-      setRes('res-onKeyDown', 'keydown: ' + e.key + ' (kod: ' + e.keyCode + ')');
-    });
-
-    /* 10) onKeyPress */
-    document.getElementById('keyPressInput').addEventListener('keypress', (e) => {
-      setRes('res-onKeyPress', 'keypress: ' + e.key);
-    });
-
-    /* 11) onKeyUp */
-    document.getElementById('keyUpInput').addEventListener('keyup', (e) => {
-      setRes('res-onKeyUp', 'keyup: ' + e.key + ' | aktualna wartość: "' + e.target.value + '"');
-    });
-
-    /* 12) onLoad */
-    function handlePageLoad() {
-      setRes('res-onLoad', 'Strona załadowana (onload). Możesz również kliknąć przycisk odświeżenia komunikatu.');
-    }
-    window.addEventListener('load', handlePageLoad);
-    document.getElementById('refreshLoadBtn').addEventListener('click', handlePageLoad);
-
-    /* 13) onMouseDown */
-    document.getElementById('mouseDownBtn').addEventListener('mousedown', () => {
-      setRes('res-onMouseDown', 'Naciśnięto przycisk myszy (mousedown).');
-    });
-
-    /* 14) onMouseOut */
-    const outBox = document.getElementById('outBox');
-    outBox.addEventListener('mouseout', () => {
-      setRes('res-onMouseOut', 'Kursor opuścił element (mouseout).');
-    });
-
-    /* 15) onMouseOver */
-    const overBox = document.getElementById('overBox');
-    overBox.addEventListener('mouseover', () => {
-      setRes('res-onMouseOver', 'Kursor nad elementem (mouseover).');
-    });
-
-    /* 16) onMouseUp */
-    document.getElementById('mouseUpBtn').addEventListener('mouseup', () => {
-      setRes('res-onMouseUp', 'Zwolniono przycisk myszy (mouseup).');
-    });
-
-    /* 17) onMouseMove */
-    const moveArea = document.getElementById('moveArea');
-    moveArea.addEventListener('mousemove', (e) => {
-      const r = moveArea.getBoundingClientRect();
-      const x = Math.round(e.clientX - r.left);
-      const y = Math.round(e.clientY - r.top);
-      setRes('res-onMouseMove', 'Kursor: x=' + x + ', y=' + y);
-    });
-
-    /* 18) onReset */
-    const demoForm = document.getElementById('demoForm');
-    demoForm.addEventListener('reset', (e) => {
-      setRes('res-onReset', 'Formularz zresetowany (onreset).');
-    });
-
-    /* 19) onResize */
-    function updateSize() {
-      setRes('res-onResize', 'Rozmiar okna: ' + window.innerWidth + ' x ' + window.innerHeight);
-    }
-    window.addEventListener('resize', updateSize);
-    // inicjalizacja
-    updateSize();
-
-    /* 20) onSelect */
-    const selectArea = document.getElementById('selectArea');
-    selectArea.addEventListener('select', (e) => {
-      const selStart = e.target.selectionStart;
-      const selEnd = e.target.selectionEnd;
-      const selectedText = e.target.value.substring(selStart, selEnd);
-      setRes('res-onSelect', 'Zaznaczony tekst: "' + selectedText + '" (pozycje: ' + selStart + '-' + selEnd + ')');
-    });
-
-    /* 21) onSubmit */
-    const submitForm = document.getElementById('submitForm');
-    submitForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = (new FormData(submitForm)).get('name') || '(puste)';
-      setRes('res-onSubmit', 'Formularz wysłany (onSubmit). Imię: ' + name);
-    });
-
-    /* 22) onUnload / beforeunload */
-    window.addEventListener('beforeunload', (e) => {
-      // większość przeglądarek ignoruje niestandardowe teksty i pokaże własny komunikat lub nic
-      setRes('res-onUnload', 'beforeunload wykryte — opuszczasz stronę lub odświeżasz ją.');
-      // komentarzowany — jeżeli chcesz wymusić ostrzeżenie, odkomentuj next:
-      // e.preventDefault();
-      // e.returnValue = '';
-      // return ''; // starsze API
-    });
-
-    // Dodatkowe drobne usprawnienia: kliknięcie w wynik na początku resetuje go (opcjonalne)
-    document.querySelectorAll('.result').forEach(r => {
-      r.addEventListener('click', () => { r.textContent = 'Wynik: —'; });
-    });
-
-  </script>
+  window.addEventListener('beforeunload',e=>{e.returnValue='Czy na pewno chcesz opuścić stronę?'; setRes('res-onUnload','Próba opuszczenia strony!');});
+</script>
 </body>
 </html>
-
