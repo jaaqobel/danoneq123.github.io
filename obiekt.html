@@ -1,1 +1,143 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Obiekty JavaScript – interaktywnie</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f3f4f6;
+      color: #222;
+      padding: 20px;
+    }
+    h1 {
+      color: #0078d7;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    button {
+      background: #0078d7;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+    input {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      width: 60%;
+      margin-right: 10px;
+    }
+    p {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Interaktywne obiekty JavaScript</h1>
+
+  <div class="card">
+    <h2>Obiekt <code>window</code></h2>
+    <button onclick="pokazAlert()">Pokaż alert</button>
+    <button onclick="pokazRozmiar()">Pokaż rozmiar okna</button>
+    <p id="infoWindow"></p>
+  </div>
+
+  <div class="card">
+    <h2>Obiekt <code>navigator</code></h2>
+    <button onclick="pokazNavigator()">Pokaż dane przeglądarki</button>
+    <p id="infoNavigator"></p>
+  </div>
+
+  <div class="card">
+    <h2>Obiekt <code>document</code></h2>
+    <p>Aktualny tytuł: <span id="tytul"></span></p>
+    <input type="text" id="nowyTytul" placeholder="Nowy tytuł strony">
+    <button onclick="zmienTytul()">Zmień tytuł</button>
+  </div>
+
+  <div class="card">
+    <h2>Obiekt <code>location</code></h2>
+    <button onclick="pokazLocation()">Pokaż adres strony</button>
+    <button onclick="przeladuj()">Przeładuj stronę</button>
+    <p id="infoLocation"></p>
+  </div>
+
+  <div class="card">
+    <h2>Obiekt <code>history</code></h2>
+    <button onclick="cofnij()">Cofnij</button>
+    <button onclick="dalej()">Dalej</button>
+    <p>(Działa tylko, jeśli masz historię w tej karcie)</p>
+  </div>
+
+  <script>
+    function pokazAlert() {
+      window.alert("Cześć! To alert z obiektu window 😄");
+    }
+
+    function pokazRozmiar() {
+      document.getElementById("infoWindow").textContent =
+        `Szerokość: ${window.innerWidth}px, Wysokość: ${window.innerHeight}px`;
+    }
+
+    function pokazNavigator() {
+      const info = `
+        Przeglądarka: ${navigator.appName}<br>
+        Wersja: ${navigator.appVersion}<br>
+        Język: ${navigator.language}<br>
+        Platforma: ${navigator.platform}
+      `;
+      document.getElementById("infoNavigator").innerHTML = info;
+    }
+
+    function zmienTytul() {
+      const nowy = document.getElementById("nowyTytul").value;
+      if (nowy.trim() !== "") {
+        document.title = nowy;
+        document.getElementById("tytul").textContent = nowy;
+      } else {
+        alert("Podaj tytuł!");
+      }
+    }
+
+    function pokazLocation() {
+      const info = `
+        Pełny adres: ${location.href}<br>
+        Domena: ${location.hostname}<br>
+        Protokół: ${location.protocol}
+      `;
+      document.getElementById("infoLocation").innerHTML = info;
+    }
+
+    function przeladuj() {
+      location.reload();
+    }
+
+    function cofnij() {
+      history.back();
+    }
+
+    function dalej() {
+      history.forward();
+    }
+
+    // Pokaż aktualny tytuł przy starcie
+    document.getElementById("tytul").textContent = document.title;
+  </script>
+
+</body>
+</html>
 
