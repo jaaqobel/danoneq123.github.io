@@ -1,80 +1,84 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Porównanie funkcji w JavaScript</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Porównanie funkcji JS</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      margin-top: 50px;
-      background: #f3f6fa;
+      background: #f5f5f5;
+      margin-top: 40px;
     }
     h2 {
       color: #333;
     }
     button {
       margin: 10px;
-      padding: 12px 22px;
-      font-size: 16px;
+      padding: 12px 20px;
       border: none;
-      border-radius: 10px;
-      cursor: pointer;
+      border-radius: 8px;
       background-color: #0078d7;
       color: white;
-      transition: 0.3s;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
     }
     button:hover {
       background-color: #005fa3;
     }
-    #wynik {
-      margin-top: 30px;
-      padding: 15px 25px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      display: inline-block;
-      min-width: 300px;
+    .box {
+      width: 200px;
+      height: 200px;
+      margin: 20px auto;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      border-radius: 15px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      transition: all 0.4s ease;
     }
   </style>
 </head>
 <body>
+  <h2>Porównanie funkcji w JavaScript</h2>
 
-  <h2>Różne sposoby definiowania funkcji</h2>
-
-  <button id="btnDeklaracja">Deklaracja funkcji</button>
+  <button onclick="pokazDeklaracja()">Deklaracja funkcji</button>
   <button id="btnWyrazenie">Wyrażenie funkcyjne</button>
   <button id="btnStrzalkowa">Funkcja strzałkowa</button>
 
-  <div id="wynik">Kliknij przycisk, aby zobaczyć różnicę 👇</div>
+  <div class="box" id="box">Kliknij przycisk 👆</div>
 
   <script>
-    const wynik = document.getElementById("wynik");
+    const box = document.getElementById("box");
 
-    // 1️⃣ Deklaracja funkcji
+    // 1️⃣ Deklaracja funkcji (można ją wywołać nawet PRZED definicją)
     function pokazDeklaracja() {
-      wynik.textContent = "✅ Deklaracja funkcji: dostępna nawet przed jej zdefiniowaniem (hoisting).";
-      document.body.style.backgroundColor = "#e8f5e9";
+      box.style.transform = "rotate(0deg)";
+      box.style.backgroundColor = "#a5d6a7";
+      box.textContent = "Deklaracja: działa dzięki hoistingowi!";
     }
 
-    // 2️⃣ Wyrażenie funkcyjne
+    // 2️⃣ Wyrażenie funkcyjne (musi być zdefiniowane zanim je użyjesz)
     const pokazWyrazenie = function() {
-      wynik.textContent = "🟡 Wyrażenie funkcyjne: nie ma hoistingu, ale można je przekazać do innych funkcji.";
-      document.body.style.backgroundColor = "#fff8e1";
+      const liczba = Math.floor(Math.random() * 100);
+      box.style.backgroundColor = "#ffe082";
+      box.textContent = `Wyrażenie: losowa liczba ${liczba}`;
     };
-
-    // 3️⃣ Funkcja strzałkowa (różni się this)
-    const pokazStrzalkowa = () => {
-      wynik.textContent = "🔥 Funkcja strzałkowa: krótsza składnia, ale nie ma własnego 'this'!";
-      document.body.style.backgroundColor = "#e3f2fd";
-    };
-
-    // Przypisanie funkcji do przycisków
-    document.getElementById("btnDeklaracja").addEventListener("click", pokazDeklaracja);
     document.getElementById("btnWyrazenie").addEventListener("click", pokazWyrazenie);
+
+    // 3️⃣ Funkcja strzałkowa (nie ma swojego this)
+    const pokazStrzalkowa = () => {
+      // przykład różnicy w "this":
+      box.style.transform = "rotate(360deg)";
+      box.style.backgroundColor = "#90caf9";
+      box.textContent = "Strzałkowa: nie ma własnego 'this'";
+    };
     document.getElementById("btnStrzalkowa").addEventListener("click", pokazStrzalkowa);
   </script>
-
 </body>
 </html>
+
