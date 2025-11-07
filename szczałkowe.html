@@ -1,59 +1,72 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Funkcja strzałkowa - przykład</title>
+  <title>Porównanie funkcji w JavaScript</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
       margin-top: 50px;
+      background-color: #f2f2f2;
     }
-    #tekst {
-      display: none;
-      margin-top: 20px;
+    h2 {
       color: #333;
     }
     button {
+      margin: 10px;
       padding: 10px 20px;
-      background-color: #0078d7;
-      color: white;
       border: none;
       border-radius: 8px;
+      background-color: #0078d7;
+      color: white;
+      font-size: 16px;
       cursor: pointer;
       transition: background-color 0.3s;
     }
     button:hover {
       background-color: #005fa3;
     }
+    #wynik {
+      margin-top: 30px;
+      font-size: 18px;
+      color: #222;
+      background-color: white;
+      display: inline-block;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
   </style>
 </head>
 <body>
 
-  <h2>Przykład funkcji strzałkowej</h2>
-  <button id="przycisk">Pokaż tekst</button>
+  <h2>Porównanie funkcji w JavaScript</h2>
 
-  <div id="tekst">🎉 To działa! Kliknij ponownie, by ukryć tekst.</div>
+  <button onclick="pokazDeklaracja()">Deklaracja funkcji</button>
+  <button id="funkcyjnaBtn">Wyrażenie funkcyjne</button>
+  <button id="strzalkowaBtn">Funkcja strzałkowa</button>
+
+  <div id="wynik">Kliknij przycisk, aby zobaczyć działanie funkcji 👇</div>
 
   <script>
-    // Funkcja strzałkowa do pokazywania / ukrywania tekstu
-    const toggleTekst = () => {
-      const tekst = document.getElementById("tekst");
-      const przycisk = document.getElementById("przycisk");
+    // --- 1️⃣ Deklaracja funkcji ---
+    function pokazDeklaracja() {
+      document.getElementById("wynik").textContent = "To działa! (Deklaracja funkcji)";
+    }
 
-      if (tekst.style.display === "none" || tekst.style.display === "") {
-        tekst.style.display = "block";
-        przycisk.textContent = "Ukryj tekst";
-      } else {
-        tekst.style.display = "none";
-        przycisk.textContent = "Pokaż tekst";
-      }
+    // --- 2️⃣ Wyrażenie funkcyjne ---
+    const pokazFunkcyjna = function() {
+      document.getElementById("wynik").textContent = "To działa! (Wyrażenie funkcyjne)";
     };
+    document.getElementById("funkcyjnaBtn").addEventListener("click", pokazFunkcyjna);
 
-    // Dodanie zdarzenia kliknięcia do przycisku
-    document.getElementById("przycisk").addEventListener("click", toggleTekst);
+    // --- 3️⃣ Funkcja strzałkowa ---
+    const pokazStrzalkowa = () => {
+      document.getElementById("wynik").textContent = "To działa! (Funkcja strzałkowa)";
+    };
+    document.getElementById("strzalkowaBtn").addEventListener("click", pokazStrzalkowa);
   </script>
 
 </body>
