@@ -1,1 +1,60 @@
 
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funkcja strzałkowa - przykład</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #tekst {
+      display: none;
+      margin-top: 20px;
+      color: #333;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #0078d7;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Przykład funkcji strzałkowej</h2>
+  <button id="przycisk">Pokaż tekst</button>
+
+  <div id="tekst">🎉 To działa! Kliknij ponownie, by ukryć tekst.</div>
+
+  <script>
+    // Funkcja strzałkowa do pokazywania / ukrywania tekstu
+    const toggleTekst = () => {
+      const tekst = document.getElementById("tekst");
+      const przycisk = document.getElementById("przycisk");
+
+      if (tekst.style.display === "none" || tekst.style.display === "") {
+        tekst.style.display = "block";
+        przycisk.textContent = "Ukryj tekst";
+      } else {
+        tekst.style.display = "none";
+        przycisk.textContent = "Pokaż tekst";
+      }
+    };
+
+    // Dodanie zdarzenia kliknięcia do przycisku
+    document.getElementById("przycisk").addEventListener("click", toggleTekst);
+  </script>
+
+</body>
+</html>
