@@ -1,34 +1,39 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" >
-  <meta name="viewport" content="width=device-width, initial-scale=1" >
-  <title>2025/2026</title>
-  <style>
-    html{  
-      background: url("hallowen.gif") no-repeat center center fixed;
-      background-size: cover; /* Dopasowanie rozmiaru tła do rozmiaru ekranu */
-      height: 100%;
-      width: 100%;
-      text-align: center;
-      font-size: 35px;
-      font-family: "Lato", sans-serif;
-    }
-    a{
-      text-decoration:none;
-      color:white;
-      }
-    h1{
-      color:red;
-       font-size:54px;
-  
-      }
-     
-   #controlBox {
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2025/2026</title>
+
+<style>
+html{
+    background: url("hallowen.gif") no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    font-size: 35px;
+    font-family: "Lato", sans-serif;
+}
+
+/* Linki */
+a{
+    text-decoration:none;
+    color:white;
+}
+
+/* Nagłówek */
+h1{
+    color:red;
+    font-size:54px;
+}
+
+/* Panel sterowania */
+#controlBox {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 140px;
+    width: 160px;
     background: #000;
     color: #fff;
     border-radius: 8px;
@@ -37,8 +42,10 @@
     box-shadow: 0 0 10px rgba(255,255,255,0.3);
     z-index: 9999;
     user-select: none;
-  }
-  #controlBox button {
+}
+
+/* Przyciski */
+#controlBox button {
     width: 100%;
     margin: 5px 0;
     padding: 8px;
@@ -49,79 +56,84 @@
     cursor: pointer;
     font-size: 14px;
     transition: background 0.3s;
-  }
-  #controlBox button:hover {
+}
+#controlBox button:hover {
     background: #555;
-  }
-  /* Wysoki kontrast */
-  .high-contrast {
-    background-color: #000 !important;
-    color: #fff !important;
-  }
-  .high-contrast a {
-    color: #0ff !important;
-  }
-    </style>
- <div id="controlBox">
-  <button id="contrastBtn">Zmień kontrast</button>
-  <button id="zoomInBtn">Powiększ +</button>
-  <button id="zoomOutBtn">Zmniejsz -</button>
+}
+
+/* Suwak kontrastu */
+#controlBox input[type="range"] {
+    width: 100%;
+    margin: 8px 0 12px 0;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Nowa strona do informatyki z Panem JS</h1>
+
+<a href="index.html">powrót</a><br><br>
+<a href="js.html">zadania z js</a><br><br>
+<a href="operatory.html">operatory</a><br><br>
+<a href="warunki.html">instrukcje-ster</a><br><br>
+<a href="funkcje.html">funkcje</a><br><br>
+<a href="zdarzenia.html">zdarzenia</a><br><br>
+<a href="obiekt.html">obiekty</a><br><br>
+<a href="szczałkowe.html">funkcje strzałkowe</a>
+
+<!-- PANEL STEROWANIA -->
+<div id="controlBox">
+    <label for="contrastRange" style="font-size:14px;">Kontrast</label>
+    <input type="range" id="contrastRange" min="100" max="300" value="100">
+
+    <button id="zoomInBtn">Powiększ +</button>
+    <button id="zoomOutBtn">Zmniejsz -</button>
 </div>
 
 <script>
-  (function(){
+(function() {
     let zoomLevel = 1;
     const zoomStep = 0.1;
     const minZoom = 0.5;
     const maxZoom = 3;
 
-    const html = document.documentElement; // <html>
-    const contrastBtn = document.getElementById('contrastBtn');
+    const html = document.documentElement;
+
+    const contrastRange = document.getElementById('contrastRange');
     const zoomInBtn = document.getElementById('zoomInBtn');
     const zoomOutBtn = document.getElementById('zoomOutBtn');
 
-    contrastBtn.addEventListener('click', () => {
-      document.body.classList.toggle('high-contrast');
+    // SUWAK KONTRASTU
+    contrastRange.addEventListener('input', () => {
+        const val = contrastRange.value;
+
+        html.style.filter = `contrast(${val}%)`;
+
+        // Przy mocnym kontraście dodaj invert
+        if (val >= 200) {
+            html.style.filter += " invert(1)";
+        }
     });
 
+    // POWIĘKSZANIE
     zoomInBtn.addEventListener('click', () => {
-      if (zoomLevel < maxZoom) {
-        zoomLevel = +(zoomLevel + zoomStep).toFixed(2);
-        html.style.fontSize = (zoomLevel * 100) + '%';
-      }
+        if (zoomLevel < maxZoom) {
+            zoomLevel = +(zoomLevel + zoomStep).toFixed(2);
+            html.style.fontSize = (zoomLevel * 100) + '%';
+        }
     });
 
+    // ZMNIEJSZANIE
     zoomOutBtn.addEventListener('click', () => {
-      if (zoomLevel > minZoom) {
-        zoomLevel = +(zoomLevel - zoomStep).toFixed(2);
-        html.style.fontSize = (zoomLevel * 100) + '%';
-      }
+        if (zoomLevel > minZoom) {
+            zoomLevel = +(zoomLevel - zoomStep).toFixed(2);
+            html.style.fontSize = (zoomLevel * 100) + '%';
+        }
     });
-  })();
+})();
 </script>
-<body>
-  <h1>Nowa strona do informatyki z Panem JS</h1>
- <a href="index.html">powrot</a>
-  <br>
-  <br>
-   <a href="js.html">zadania z js</a>
-    <br>
-    <br>
-   <a href="operatory.html">operatory</a>
-      <br>
-    <br>
-   <a href="warunki.html">instrukcje-ster</a>
-  <br>
-  <br>
-   <a href="funkcje.html">funkcje</a>
-  <br>
-  <br>
-   <a href="zdarzenia.html">zdarzenia</a>
-   <br>
-    <br>
-     <a href="obiekt.html">obiekty</a>
-   <br>
-    <br>
-   <a href="szczałkowe.html">funkcje szczałkowe</a>
+
 </body>
 </html>
