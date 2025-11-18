@@ -44,23 +44,6 @@ h1{
     user-select: none;
 }
 
-/* Przyciski */
-#controlBox button {
-    width: 100%;
-    margin: 5px 0;
-    padding: 8px;
-    background: #222;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background 0.3s;
-}
-#controlBox button:hover {
-    background: #555;
-}
-
 /* Suwak kontrastu */
 #controlBox input[type="range"] {
     width: 100%;
@@ -87,23 +70,12 @@ h1{
 <div id="controlBox">
     <label for="contrastRange" style="font-size:14px;">Kontrast</label>
     <input type="range" id="contrastRange" min="100" max="300" value="100">
-
-    <button id="zoomInBtn">Powiększ +</button>
-    <button id="zoomOutBtn">Zmniejsz -</button>
 </div>
 
 <script>
 (function() {
-    let zoomLevel = 1;
-    const zoomStep = 0.1;
-    const minZoom = 0.5;
-    const maxZoom = 3;
-
     const html = document.documentElement;
-
     const contrastRange = document.getElementById('contrastRange');
-    const zoomInBtn = document.getElementById('zoomInBtn');
-    const zoomOutBtn = document.getElementById('zoomOutBtn');
 
     // SUWAK KONTRASTU
     contrastRange.addEventListener('input', () => {
@@ -114,22 +86,6 @@ h1{
         // Przy mocnym kontraście dodaj invert
         if (val >= 200) {
             html.style.filter += " invert(1)";
-        }
-    });
-
-    // POWIĘKSZANIE
-    zoomInBtn.addEventListener('click', () => {
-        if (zoomLevel < maxZoom) {
-            zoomLevel = +(zoomLevel + zoomStep).toFixed(2);
-            html.style.fontSize = (zoomLevel * 100) + '%';
-        }
-    });
-
-    // ZMNIEJSZANIE
-    zoomOutBtn.addEventListener('click', () => {
-        if (zoomLevel > minZoom) {
-            zoomLevel = +(zoomLevel - zoomStep).toFixed(2);
-            html.style.fontSize = (zoomLevel * 100) + '%';
         }
     });
 })();
