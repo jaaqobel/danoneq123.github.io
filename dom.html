@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>DOM – Lightbox & Slider</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #f5f5f5;
+  margin-top: 40px;
+}
+
+h2 {
+  color: #333;
+}
+
+/* PRZYCISKI */
+button {
+  margin: 10px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #0078d7;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #005fa3;
+}
+
+/* GALERIA */
+.gallery {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.gallery img {
+  width: 140px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
+}
+
+/* LIGHTBOX */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#lightbox img {
+  max-width: 80%;
+  max-height: 80%;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+
+/* DYNAMICZNE ELEMENTY */
+.box {
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border-radius: 15px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  transition: all 0.4s ease;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Galeria – Lightbox + Slider</h2>
+
+<div class="gallery">
+  <img src="https://picsum.photos/id/1015/600/400">
+  <img src="https://picsum.photos/id/1025/600/400">
+  <img src="https://picsum.photos/id/1035/600/400">
+</div>
+
+<div id="lightbox">
+  <img id="bigImage">
+  <div>
+    <button id="prev">◀</button>
+    <button id="close">X</button>
+    <button id="next">▶</button>
+  </div>
+</div>
+
+<h2>Tworzenie i usuwanie elementów DOM</h2>
+
+<button id="add">Dodaj element</button>
+<button id="remove">Usuń element</button>
+
+<div id="container"></div>
+
+<script>
+// ===== LIGHTBOX / SLIDER =====
+const images = document.querySelectorAll(".gallery img");
+const lightbox = document.getElementById("lightbox");
+const bigImage = document.getElementById("bigImage");
+let index = 0;
+
+images.forEach((img, i) => {
+  img.addEventListener("click", () => {
+    index = i;
+    showImage();
+    lightbox.style.display = "flex";
+  });
+});
+
+function showImage() {
+  bigImage.src = images[index].src;
+}
+
+document.getElementById("close").onclick = () => {
+  lightbox.style.display = "none";
+};
+
+document.getElementById("next").onclick = () => {
+  index = (index + 1) % images.length;
+  showImage();
+};
+
+document.getElementById("prev").onclick = () => {
+  index = (index - 1 + images.length) % images.length;
+  showImage();
+};
+
+// ===== DOM – DODAWANIE / USUWANIE =====
+const container = document.getElementById("container");
+let count = 0;
+
+document.getElementById("add").onclick = () => {
+  const div = document.createElement("div");
+  div.className = "box";
+  div.textContent = "Element " + (++count);
+  container.appendChild(div);
+};
+
+document.getElementById("remove").onclick = () => {
+  if (container.lastChild) {
+    container.removeChild(container.lastChild);
+    count--;
+  }
+};
+</script>
+
+</body>
+</html>
