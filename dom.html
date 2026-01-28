@@ -16,7 +16,6 @@ h2 {
   color: #333;
 }
 
-/* PRZYCISKI */
 button {
   margin: 10px;
   padding: 12px 20px;
@@ -26,11 +25,18 @@ button {
   color: white;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s;
 }
 
 button:hover {
   background-color: #005fa3;
+}
+
+input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  width: 240px;
 }
 
 /* GALERIA */
@@ -46,11 +52,6 @@ button:hover {
   border-radius: 12px;
   box-shadow: 0 3px 8px rgba(0,0,0,0.2);
   cursor: pointer;
-  transition: transform 0.3s;
-}
-
-.gallery img:hover {
-  transform: scale(1.05);
 }
 
 /* LIGHTBOX */
@@ -68,7 +69,6 @@ button:hover {
   max-width: 80%;
   max-height: 80%;
   border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.5);
 }
 
 /* DYNAMICZNE ELEMENTY */
@@ -83,7 +83,6 @@ button:hover {
   font-weight: bold;
   border-radius: 15px;
   box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-  transition: all 0.4s ease;
 }
 </style>
 </head>
@@ -107,15 +106,21 @@ button:hover {
   </div>
 </div>
 
-<h2>Tworzenie i usuwanie elementów DOM</h2>
+<h2>Tworzenie elementów DOM</h2>
 
-<button id="add">Dodaj element</button>
-<button id="remove">Usuń element</button>
+<input type="text" id="customText" placeholder="Wpisz treść elementu">
+
+<br>
+
+<button id="addCustom">Dodaj na koniec</button>
+<button id="addBefore">Dodaj na początek</button>
+<button id="removeFirst">Usuń pierwszy</button>
+<button id="removeLast">Usuń ostatni</button>
 
 <div id="container"></div>
 
 <script>
-// ===== LIGHTBOX / SLIDER =====
+// ===== LIGHTBOX =====
 const images = document.querySelectorAll(".gallery img");
 const lightbox = document.getElementById("lightbox");
 const bigImage = document.getElementById("bigImage");
@@ -124,14 +129,10 @@ let index = 0;
 images.forEach((img, i) => {
   img.addEventListener("click", () => {
     index = i;
-    showImage();
+    bigImage.src = images[index].src;
     lightbox.style.display = "flex";
   });
 });
-
-function showImage() {
-  bigImage.src = images[index].src;
-}
 
 document.getElementById("close").onclick = () => {
   lightbox.style.display = "none";
@@ -139,29 +140,50 @@ document.getElementById("close").onclick = () => {
 
 document.getElementById("next").onclick = () => {
   index = (index + 1) % images.length;
-  showImage();
+  bigImage.src = images[index].src;
 };
 
 document.getElementById("prev").onclick = () => {
   index = (index - 1 + images.length) % images.length;
-  showImage();
+  bigImage.src = images[index].src;
 };
 
-// ===== DOM – DODAWANIE / USUWANIE =====
+// ===== DOM =====
 const container = document.getElementById("container");
-let count = 0;
+const input = document.getElementById("customText");
 
-document.getElementById("add").onclick = () => {
+function createBox(text) {
   const div = document.createElement("div");
   div.className = "box";
-  div.textContent = "Element " + (++count);
-  container.appendChild(div);
+  div.textContent = text;
+  return div;
+}
+
+// dodaj na koniec
+document.getElementById("addCustom").onclick = () => {
+  if (input.value.trim() === "") return;
+  container.appendChild(createBox(input.value));
+  input.value = "";
 };
 
-document.getElementById("remove").onclick = () => {
+// dodaj na początek
+document.getElementById("addBefore").onclick = () => {
+  if (input.value.trim() === "") return;
+  container.prepend(createBox(input.value));
+  input.value = "";
+};
+
+// usuń pierwszy
+document.getElementById("removeFirst").onclick = () => {
+  if (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+};
+
+// usuń ostatni
+document.getElementById("removeLast").onclick = () => {
   if (container.lastChild) {
     container.removeChild(container.lastChild);
-    count--;
   }
 };
 </script>
