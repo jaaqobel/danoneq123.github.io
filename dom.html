@@ -117,7 +117,6 @@ input {
 <button id="removeFirst">Usuń pierwszy</button>
 <button id="removeLast">Usuń ostatni</button>
 
-<!-- NOWOŚĆ: przyciski zmiany tła -->
 <br>
 <button id="bgBody">Zmień tło strony</button>
 <button id="bgBoxes">Zmień kolor wszystkich kwadratów</button>
@@ -131,23 +130,43 @@ const lightbox = document.getElementById("lightbox");
 const bigImage = document.getElementById("bigImage");
 let index = 0;
 
+// ===== AUTOMATYCZNY SLIDER =====
+let autoSlideInterval;
+
+function startAutoSlide() {
+  autoSlideInterval = setInterval(() => {
+    index = (index + 1) % images.length;
+    bigImage.src = images[index].src;
+  }, 3000); // zmiana co 3 sekundy
+}
+
+function stopAutoSlide() {
+  clearInterval(autoSlideInterval);
+}
+
+// Otwarcie lightboxa
 images.forEach((img, i) => {
   img.addEventListener("click", () => {
     index = i;
     bigImage.src = images[index].src;
     lightbox.style.display = "flex";
+    startAutoSlide(); // start automatycznej zmiany zdjęć
   });
 });
 
+// Zamknięcie lightboxa
 document.getElementById("close").onclick = () => {
   lightbox.style.display = "none";
+  stopAutoSlide();
 };
 
+// Przycisk następny
 document.getElementById("next").onclick = () => {
   index = (index + 1) % images.length;
   bigImage.src = images[index].src;
 };
 
+// Przycisk poprzedni
 document.getElementById("prev").onclick = () => {
   index = (index - 1 + images.length) % images.length;
   bigImage.src = images[index].src;
@@ -170,9 +189,7 @@ function getRandomColor() {
 // ===== FUNKCJA DODAJĄCA ZDARZENIA DO BOXA =====
 function addBoxEvents(box) {
   box.addEventListener("click", () => {
-    // zmień kolor klikniętego boxa
     box.style.backgroundColor = getRandomColor();
-    // zmień kolor ostatniego boxa, jeśli nie jest tym samym
     if (container.lastChild && container.lastChild !== box) {
       container.lastChild.style.backgroundColor = getRandomColor();
     }
@@ -221,7 +238,6 @@ document.getElementById("bgBody").onclick = () => {
   document.body.style.backgroundColor = getRandomColor();
 };
 
-// NOWOŚĆ: zmiana koloru wszystkich kwadratów
 document.getElementById("bgBoxes").onclick = () => {
   const boxes = container.querySelectorAll(".box");
   boxes.forEach(box => {
