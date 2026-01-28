@@ -117,6 +117,11 @@ input {
 <button id="removeFirst">Usuń pierwszy</button>
 <button id="removeLast">Usuń ostatni</button>
 
+<!-- NOWOŚĆ: przyciski zmiany tła -->
+<br>
+<button id="bgBody">Zmień tło strony</button>
+<button id="bgBoxes">Zmień kolor wszystkich kwadratów</button>
+
 <div id="container"></div>
 
 <script>
@@ -152,10 +157,34 @@ document.getElementById("prev").onclick = () => {
 const container = document.getElementById("container");
 const input = document.getElementById("customText");
 
+// ===== LOSOWY KOLOR =====
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+// ===== FUNKCJA DODAJĄCA ZDARZENIA DO BOXA =====
+function addBoxEvents(box) {
+  box.addEventListener("click", () => {
+    // zmień kolor klikniętego boxa
+    box.style.backgroundColor = getRandomColor();
+    // zmień kolor ostatniego boxa, jeśli nie jest tym samym
+    if (container.lastChild && container.lastChild !== box) {
+      container.lastChild.style.backgroundColor = getRandomColor();
+    }
+  });
+}
+
+// ===== TWORZENIE BOXA =====
 function createBox(text) {
   const div = document.createElement("div");
   div.className = "box";
   div.textContent = text;
+  addBoxEvents(div);
   return div;
 }
 
@@ -185,6 +214,19 @@ document.getElementById("removeLast").onclick = () => {
   if (container.lastChild) {
     container.removeChild(container.lastChild);
   }
+};
+
+// ===== ZMIANA TŁA =====
+document.getElementById("bgBody").onclick = () => {
+  document.body.style.backgroundColor = getRandomColor();
+};
+
+// NOWOŚĆ: zmiana koloru wszystkich kwadratów
+document.getElementById("bgBoxes").onclick = () => {
+  const boxes = container.querySelectorAll(".box");
+  boxes.forEach(box => {
+    box.style.backgroundColor = getRandomColor();
+  });
 };
 </script>
 
