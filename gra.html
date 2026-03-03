@@ -21,9 +21,7 @@ body {
 #gameCanvas {
     border: 2px solid #00f7ff;
     background-color: #0a0a14;
-    box-shadow: 
-        0 0 10px #00f7ff,
-        0 0 25px #00f7ff;
+    box-shadow: 0 0 25px #00f7ff;
 }
 
 #gameOver {
@@ -47,6 +45,7 @@ button {
     color: #00f7ff;
     cursor: pointer;
 }
+
 button:hover {
     background: #00f7ff;
     color: #0a0a14;
@@ -73,8 +72,10 @@ const box = 20;
 let snake;
 let direction;
 let food;
-let score = 0;
-let bestScore = localStorage.getItem('bestScore') ? parseInt(localStorage.getItem('bestScore')) : 0;
+let score;
+let bestScore = localStorage.getItem('bestScore') 
+    ? parseInt(localStorage.getItem('bestScore')) 
+    : 0;
 let game;
 
 /* 🔊 DŹWIĘKI */
@@ -83,58 +84,62 @@ const gameOverSound = new Audio("https://actions.google.com/sounds/v1/cartoon/co
 
 function startGame() {
     snake = [{x: 300, y: 300}];
-    direction = 'UP';
+    direction = "UP";
     food = generateFood();
     score = 0;
-    document.getElementById('gameOver').style.display = 'none';
+
+    document.getElementById('gameOver').style.display = "none";
+
     clearInterval(game);
-    game = setInterval(draw, 160); // 🔥 wolniejsze tempo
+    game = setInterval(draw, 150);
 }
 
 function generateFood() {
-    return {
-        x: Math.floor(Math.random() * (canvas.width / box)) * box,
-        y: Math.floor(Math.random() * (canvas.height / box)) * box
-    };
+    let newFood;
+    do {
+        newFood = {
+            x: Math.floor(Math.random() * (canvas.width / box)) * box,
+            y: Math.floor(Math.random() * (canvas.height / box)) * box
+        };
+    } while (snake.some(segment => 
+        segment.x === newFood.x && segment.y === newFood.y
+    ));
+    return newFood;
 }
 
 function drawApple(x, y) {
     ctx.shadowColor = "#ff004c";
     ctx.shadowBlur = 20;
-    ctx.fillStyle = '#ff004c';
+    ctx.fillStyle = "#ff004c";
     ctx.beginPath();
-    ctx.arc(x + box/2, y + box/2, box/2, 0, Math.PI*2);
+    ctx.arc(x + box/2, y + box/2, box/2, 0, Math.PI * 2);
     ctx.fill();
     ctx.shadowBlur = 0;
 }
 
 function drawSnake() {
     snake.forEach((segment, i) => {
-
         if (i === 0) {
-            // 🔥 GŁOWA - mocniejszy neon
-            ctx.shadowColor = "#ff00cc";
-            ctx.shadowBlur = 25;
             ctx.fillStyle = "#ff00cc";
+            ctx.shadowColor = "#ff00cc";
+            ctx.shadowBlur = 20;
         } else {
-            ctx.shadowColor = "#00f7ff";
-            ctx.shadowBlur = 15;
             ctx.fillStyle = "#00f7ff";
+            ctx.shadowColor = "#00f7ff";
+            ctx.shadowBlur = 10;
         }
-
         ctx.fillRect(segment.x, segment.y, box, box);
         ctx.shadowBlur = 0;
     });
 }
 
-/* 🎮 STEROWANIE WASD + STRZAŁKI */
-document.addEventListener('keydown', event => {
-    const key = event.key.toLowerCase();
+document.addEventListener("keydown", e => {
+    const key = e.key.toLowerCase();
 
-    if ((key === 'arrowup' || key === 'w') && direction !== 'DOWN') direction = 'UP';
-    if ((key === 'arrowdown' || key === 's') && direction !== 'UP') direction = 'DOWN';
-    if ((key === 'arrowleft' || key === 'a') && direction !== 'RIGHT') direction = 'LEFT';
-    if ((key === 'arrowright' || key === 'd') && direction !== 'LEFT') direction = 'RIGHT';
+    if ((key === "arrowup" || key === "w") && direction !== "DOWN") direction = "UP";
+    if ((key === "arrowdown" || key === "s") && direction !== "UP") direction = "DOWN";
+    if ((key === "arrowleft" || key === "a") && direction !== "RIGHT") direction = "LEFT";
+    if ((key === "arrowright" || key === "d") && direction !== "LEFT") direction = "RIGHT";
 });
 
 function draw() {
@@ -146,47 +151,52 @@ function draw() {
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
 
-    if (direction === 'LEFT') snakeX -= box;
-    if (direction === 'UP') snakeY -= box;
-    if (direction === 'RIGHT') snakeX += box;
-    if (direction === 'DOWN') snakeY += box;
+    if (direction === "LEFT") snakeX -= box;
+    if (direction === "UP") snakeY -= box;
+    if (direction === "RIGHT") snakeX += box;
+    if (direction === "DOWN") snakeY += box;
 
-    if (snakeX === food.x && snakeY === food.y) {
-        eatSound.play(); // 🔊 dźwięk jedzenia
-        food = generateFood();
-        score++;
-    } else {
-        snake.pop();
-    }
-
-    const newHead = {x: snakeX, y: snakeY};
+    const collisionWithSelf = snake.slice(1).some(segment =>
+        segment.x === snakeX && segment.y === snakeY
+    );
 
     if (
         snakeX < 0 ||
         snakeY < 0 ||
         snakeX >= canvas.width ||
         snakeY >= canvas.height ||
-        snake.some(segment => segment.x === snakeX && segment.y === snakeY)
+        collisionWithSelf
     ) {
         clearInterval(game);
-        gameOverSound.play(); // 🔊 dźwięk przegranej
+
+        gameOverSound.currentTime = 0;
+        gameOverSound.play().catch(() => {});
 
         if (score > bestScore) {
             bestScore = score;
-            localStorage.setItem('bestScore', bestScore);
+            localStorage.setItem("bestScore", bestScore);
         }
 
-        document.getElementById('currentScore').innerText = score;
-        document.getElementById('bestScore').innerText = bestScore;
-        document.getElementById('gameOver').style.display = 'flex';
+        document.getElementById("currentScore").innerText = score;
+        document.getElementById("bestScore").innerText = bestScore;
+        document.getElementById("gameOver").style.display = "flex";
         return;
     }
 
-    snake.unshift(newHead);
+    if (snakeX === food.x && snakeY === food.y) {
+        eatSound.currentTime = 0;
+        eatSound.play().catch(() => {});
+        food = generateFood();
+        score++;
+    } else {
+        snake.pop();
+    }
+
+    snake.unshift({x: snakeX, y: snakeY});
 }
 
 startGame();
-document.getElementById('restartButton').addEventListener('click', startGame);
+document.getElementById("restartButton").addEventListener("click", startGame);
 </script>
 
 </body>
