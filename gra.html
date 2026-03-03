@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Snake Neo Edition</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-
 <style>
 body {
     display: flex;
@@ -17,13 +15,11 @@ body {
     background: radial-gradient(circle at center, #0f0f1a, #050510);
     font-family: 'Orbitron', sans-serif;
 }
-
 #gameCanvas {
     border: 2px solid #00f7ff;
     background-color: #0a0a14;
     box-shadow: 0 0 25px #00f7ff;
 }
-
 #gameOver {
     display: none;
     flex-direction: column;
@@ -36,7 +32,6 @@ body {
     color: #00f7ff;
     text-align: center;
 }
-
 button {
     padding: 12px 25px;
     margin-top: 20px;
@@ -45,14 +40,12 @@ button {
     color: #00f7ff;
     cursor: pointer;
 }
-
 button:hover {
     background: #00f7ff;
     color: #0a0a14;
 }
 </style>
 </head>
-
 <body>
 
 <canvas id="gameCanvas" width="600" height="600"></canvas>
@@ -67,35 +60,24 @@ button:hover {
 <script>
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-
 const box = 20;
-let snake;
+let snake = [];
+let snakeColors = [];
 let direction;
+let nextDirection;
 let food;
-let score;
-let bestScore = localStorage.getItem('bestScore') 
-    ? parseInt(localStorage.getItem('bestScore')) 
-    : 0;
+let score = 0;
+let bestScore = localStorage.getItem('bestScore') ? parseInt(localStorage.getItem('bestScore')) : 0;
 let game;
-
-/* 🔊 DŹWIĘKI */
-const eatSound = new Audio("https://actions.google.com/sounds/v1/cartoon/pop.ogg");
-const gameOverSound = new Audio("https://actions.google.com/sounds/v1/cartoon/concussive_hit_guitar_boing.ogg");
-
-/* 🔥 LOSOWE NEONOWE KOLORY */
-function getRandomNeonColor() {
-    const colors = ["#ff00cc", "#00f7ff", "#ffea00", "#00ff6a", "#ff6a00", "#ff004c"];
-    return colors[Math.floor(Math.random() * colors.length)];
-}
 
 function startGame() {
     snake = [{x: 300, y: 300}];
+    snakeColors = ["#ffea00"];
     direction = "UP";
+    nextDirection = "UP";
     food = generateFood();
     score = 0;
-
     document.getElementById('gameOver').style.display = "none";
-
     clearInterval(game);
     game = setInterval(draw, 150);
 }
@@ -107,9 +89,7 @@ function generateFood() {
             x: Math.floor(Math.random() * (canvas.width / box)) * box,
             y: Math.floor(Math.random() * (canvas.height / box)) * box
         };
-    } while (snake.some(segment => 
-        segment.x === newFood.x && segment.y === newFood.y
-    ));
+    } while (snake.some(segment => segment.x === newFood.x && segment.y === newFood.y));
     return newFood;
 }
 
@@ -125,19 +105,10 @@ function drawApple(x, y) {
 
 function drawSnake() {
     snake.forEach((segment, i) => {
-        let color, shadow, blur;
-        if (i === 0) {
-            color = "#ff00cc"; // głowa
-            shadow = "#ff00cc";
-            blur = 25;
-        } else {
-            color = getRandomNeonColor(); // segmenty
-            shadow = color;
-            blur = 15;
-        }
+        const color = snakeColors[i] || "#00f7ff";
         ctx.fillStyle = color;
-        ctx.shadowColor = shadow;
-        ctx.shadowBlur = blur;
+        ctx.shadowColor = color;
+        ctx.shadowBlur = i === 0 ? 25 : 15;
         ctx.fillRect(segment.x, segment.y, box, box);
         ctx.shadowBlur = 0;
     });
@@ -145,61 +116,57 @@ function drawSnake() {
 
 document.addEventListener("keydown", e => {
     const key = e.key.toLowerCase();
-    if ((key === "arrowup" || key === "w") && direction !== "DOWN") direction = "UP";
-    if ((key === "arrowdown" || key === "s") && direction !== "UP") direction = "DOWN";
-    if ((key === "arrowleft" || key === "a") && direction !== "RIGHT") direction = "LEFT";
-    if ((key === "arrowright" || key === "d") && direction !== "LEFT") direction = "RIGHT";
+    if ((key === "arrowup" || key === "w") && direction !== "DOWN") nextDirection = "UP";
+    if ((key === "arrowdown" || key === "s") && direction !== "UP") nextDirection = "DOWN";
+    if ((key === "arrowleft" || key === "a") && direction !== "RIGHT") nextDirection = "LEFT";
+    if ((key === "arrowright" || key === "d") && direction !== "LEFT") nextDirection = "RIGHT";
 });
 
 function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    direction = nextDirection;
+    let headX = snake[0].x;
+    let headY = snake[0].y;
 
-    drawApple(food.x, food.y);
-    drawSnake();
+    if (direction === "UP") headY -= box;
+    if (direction === "DOWN") headY += box;
+    if (direction === "LEFT") headX -= box;
+    if (direction === "RIGHT") headX += box;
 
-    let snakeX = snake[0].x;
-    let snakeY = snake[0].y;
-
-    const collisionWithSelf = snake.slice(1).some(segment =>
-        segment.x === snakeX && segment.y === snakeY
-    );
-
-    if (
-        snakeX < 0 ||
-        snakeY < 0 ||
-        snakeX >= canvas.width ||
-        snakeY >= canvas.height ||
-        collisionWithSelf
-    ) {
+    if (headX < 0 || headY < 0 || headX >= canvas.width || headY >= canvas.height || snake.slice(1).some(s => s.x === headX && s.y === headY)) {
         clearInterval(game);
-        gameOverSound.currentTime = 0;
-        gameOverSound.play().catch(() => {});
-
         if (score > bestScore) {
             bestScore = score;
             localStorage.setItem("bestScore", bestScore);
         }
-
         document.getElementById("currentScore").innerText = score;
         document.getElementById("bestScore").innerText = bestScore;
         document.getElementById("gameOver").style.display = "flex";
         return;
     }
 
-    if (snakeX === food.x && snakeY === food.y) {
-        eatSound.currentTime = 0;
-        eatSound.play().catch(() => {});
+    snake.unshift({x: headX, y: headY});
+    snakeColors.unshift("#ffea00"); // Głowa zawsze żółta
+
+    if (headX === food.x && headY === food.y) {
         food = generateFood();
         score++;
     } else {
         snake.pop();
+        snakeColors.pop();
     }
 
-    snake.unshift({x: snakeX, y: snakeY});
+    snakeColors[0] = "#ffea00"; // upewnij się, że głowa pozostaje żółta
+    for (let i = 1; i < snakeColors.length; i++) {
+        snakeColors[i] = "#00f7ff"; // reszta niebieska
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawApple(food.x, food.y);
+    drawSnake();
 }
 
 startGame();
-document.getElementById("restartButton").addEventListener("click", startGame);
+document.getElementById('restartButton').addEventListener('click', startGame);
 </script>
 
 </body>
