@@ -1,459 +1,69 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gra Snake</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #444; /* Ciemno szare tło */
-            margin: 0;
-            position: relative;
-        }
-        #background {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        #gameCanvas {
-            border: 1px solid black;
-            background-color: #ccc; /* Jasnoszare tło dla obszaru gry */
-            z-index: 1;
-        }
-        #gameOver {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            border: 2px solid blue; /* Niebieska ramka */
-            padding: 20px;
-            background-color: red; /* Czerwone tło */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-            color: cyan; /* Cyanowy tekst */
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-    <canvas id="background"></canvas>
-    <canvas id="gameCanvas" width="600" height="600"></canvas>
-    <div id="gameOver">
-        <h2>Koniec gry!</h2>
-        <p>Twój wynik: <span id="currentScore">0</span></p>
-        <p>Najlepszy wynik: <span id="bestScore">0</span></p>
-        <button id="restartButton">Spróbuj jeszcze raz</button>
-    </div>
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const backgroundCanvas = document.getElementById('background');
-        const bgCtx = backgroundCanvas.getContext('2d');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snake Neo Edition</title>
 
-        // Ustawienie rozmiaru tła
-        backgroundCanvas.width = window.innerWidth;
-        backgroundCanvas.height = window.innerHeight;
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-        const box = 20;
-        let snake;
-        let direction;
-        let food;
-        let score = 0;
-        let bestScore = localStorage.getItem('bestScore') ? parseInt(localStorage.getItem('bestScore')) : 0;
-
-        function drawBackground() {
-            bgCtx.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
-            for (let x = 0; x < backgroundCanvas.width; x += 40) {
-                for (let y = 0; y < backgroundCanvas.height; y += 40) {
-                    bgCtx.fillStyle = hsl(${Math.random() * 360}, 100%, 50%);
-                    bgCtx.fillRect(x, y, 30, 30); // Rysowanie kolorowych kwadratów
-                }
-            }
-        }
-
-        function startGame() {
-            snake = [
-                {x: Math.floor(canvas.width / (2 * box)) * box, y: Math.floor(canvas.height / (2 * box)) * box}
-            ];
-            direction = 'UP';
-            food = generateFood();
-            score = 0;
-            document.getElementById('gameOver').style.display = 'none';
-            document.getElementById('bestScore').innerText = bestScore;
-            clearInterval(game);
-            game = setInterval(draw, 150); // Wolniejsze tempo
-        }
-
-        function generateFood() {
-            return {
-                x: Math.floor(Math.random() * (canvas.width / box)) * box,
-                y: Math.floor(Math.random() * (canvas.height / box)) * box
-            };
-        }
-
-        function drawApple(x, y) {
-            ctx.fillStyle = 'red'; // Kolor jabłka
-            ctx.beginPath();
-            ctx.arc(x + box / 2, y + box / 2, box / 2, 0, Math.PI * 2); // Rysowanie okrągłego jabłka
-            ctx.fill();
-
-            // Rysowanie liści
-            ctx.fillStyle = 'green';
-            ctx.beginPath();
-            ctx.moveTo(x + box / 2, y + box / 2 - 10); // Wierzchołek liścia
-            ctx.lineTo(x + box / 2 - 5, y + box / 2 - 20); // Lewy koniec liścia
-            ctx.lineTo(x + box / 2 + 5, y + box / 2 - 20); // Prawy koniec liścia
-            ctx.closePath();
-            ctx.fill();
-        }
-
-        function drawSnake() {
-            for (let i = 0; i < snake.length; i++) {
-                ctx.fillStyle = 'hsl(' + (i * 360 / snake.length) + ', 100%, 50%)'; // Kolor węża
-                ctx.fillRect(snake[i].x, snake[i].y, box, box); // Rysowanie prostokątnych segmentów
-            }
-
-            // Rysowanie twarzy węża
-            ctx.fillStyle = 'black';
-            ctx.fillRect(snake[0].x + box / 4, snake[0].y + box / 4, box / 2, box / 2); // Oczy
-            ctx.fillStyle = 'white';
-            ctx.fillRect(snake[0].x + box / 4 - 5, snake[0].y + box / 4 - 5, 5, 5); // Lewa oko
-            ctx.fillStyle = 'white';
-            ctx.fillRect(snake[0].x + box / 4 + 5, snake[0].y + box / 4 - 5, 5, 5); // Prawa oko
-            
-            // Rysowanie języka
-            ctx.fillStyle = 'red';
-            ctx.beginPath();
-            ctx.moveTo(snake[0].x + box / 2, snake[0].y + box / 2); // Początek języka
-            ctx.lineTo(snake[0].x + box / 2 - 5, snake[0].y + box / 2 + 10); // Koniec języka
-            ctx.lineTo(snake[0].x + box / 2 + 5, snake[0].y + box / 2 + 10); // Koniec języka
-            ctx.closePath();
-            ctx.fill();
-        }
-
-        document.addEventListener('keydown', event => {
-            if (event.key === 'ArrowUp' && direction !== 'DOWN') direction = 'UP';
-            if (event.key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
-            if (event.key === 'ArrowLeft' && direction !== 'RIGHT') direction = 'LEFT';
-            if (event.key === 'ArrowRight' && direction !== 'LEFT') direction = 'RIGHT';
-        });
-
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            drawApple(food.x, food.y); // Rysowanie jabłka
-            drawSnake(); // Rysowanie węża
-
-            let snakeX = snake[0].x;
-            let snakeY = snake[0].y;
-
-            if (direction === 'LEFT') snakeX -= box;
-            if (direction === 'UP') snakeY -= box;
-            if (direction === 'RIGHT') snakeX += box;
-            if (direction === 'DOWN') snakeY += box;
-
-            if (snakeX === food.x && snakeY === food.y) {
-                food = generateFood();
-                score++;
-                // Dodaj nowy segment węża
-                snake.push({}); 
-            } else {
-                snake.pop(); // Usunięcie ostatniego segmentu
-            }
-
-            const newHead = {x: snakeX, y: snakeY};
-
-            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake)) {
-                clearInterval(game);
-                if (score > bestScore) {
-                    bestScore = score;
-                    localStorage.setItem('bestScore', bestScore);
-                }
-                document.getElementById('currentScore').innerText = score;
-                document.getElementById('bestScore').innerText = bestScore;
-                document.getElementById('gameOver').style.display = 'flex';
-            }
-
-            snake.unshift(newHead);
-        }
-
-        function collision(head, array) {
-            return array.some(segment => head.x === segment.x && head.y === segment.y);
-        }
-
-        let game;
-        drawBackground(); // Rysowanie tła z kolorowymi wzorami
-        startGame();
-
-        document.getElementById('restartButton').addEventListener('click', startGame);
-    </script>
-</body>
-</html> chce zebys zmienił styl chce zeby było to w stylu neo 
-
-Super 😎 Zrobimy z tego styl neo / neon cyberpunk – ciemne tło, świecące elementy, neonowy wąż i klimatyczny ekran „Game Over”.
-
-Poniżej masz gotowy podmieniony CSS + lekkie poprawki w JS do efektu neon glow.
-
-🔥 1. Zamień cały <style> na to:
 <style>
-    body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        margin: 0;
-        background: radial-gradient(circle at center, #0f0f1a, #050510);
-        font-family: 'Orbitron', sans-serif;
-        overflow: hidden;
-    }
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: radial-gradient(circle at center, #0f0f1a, #050510);
+    font-family: 'Orbitron', sans-serif;
+}
 
-    #background {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-    }
+#gameCanvas {
+    border: 2px solid #00f7ff;
+    background-color: #0a0a14;
+    box-shadow: 
+        0 0 10px #00f7ff,
+        0 0 25px #00f7ff;
+}
 
-    #gameCanvas {
-        border: 2px solid #00f7ff;
-        background-color: #0a0a14;
-        box-shadow: 
-            0 0 10px #00f7ff,
-            0 0 20px #00f7ff,
-            0 0 40px #00f7ff;
-        z-index: 1;
-    }
+#gameOver {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    background: rgba(10, 10, 20, 0.95);
+    border: 2px solid #ff00cc;
+    box-shadow: 0 0 25px #ff00cc;
+    position: absolute;
+    color: #00f7ff;
+    text-align: center;
+}
 
-    #gameOver {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        padding: 30px;
-        background: rgba(10, 10, 20, 0.95);
-        border: 2px solid #ff00cc;
-        box-shadow:
-            0 0 15px #ff00cc,
-            0 0 30px #ff00cc;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        color: #00f7ff;
-        text-align: center;
-    }
-
-    #gameOver h2 {
-        color: #ff00cc;
-        text-shadow: 0 0 10px #ff00cc;
-    }
-
-    button {
-        padding: 12px 25px;
-        font-size: 16px;
-        margin-top: 20px;
-        background: transparent;
-        border: 2px solid #00f7ff;
-        color: #00f7ff;
-        cursor: pointer;
-        transition: 0.
-
-chce zebys to dopisął do całego kodu
-
-Gotowe 😎🔥
-Poniżej masz cały kod HTML już przerobiony na styl neo / neon cyberpunk – z:
-
-🌌 ciemnym gradientowym tłem
-
-💡 neonowym obramowaniem planszy
-
-🐍 świecącym wężem
-
-🍎 neonowym jabłkiem
-
-💀 cyberpunkowym ekranem „Game Over”
-
-✨ efektem glow (shadow blur)
-
-Wystarczy podmienić cały plik.
-
-🚀 GOTOWY KOD
-
-
-Jeśli chcesz, mogę teraz zrobić:
-
-🔥 wersję ULTRA neon (efekty cząsteczek, pulsowanie)
-
-⚡ tryb speed + poziomy trudności
-
-🎮 wersję z WASD
-
-💾 zapis wyników do tabeli rankingowej
-
-🌌 animowane cyberpunkowe tło
-
-Co robimy dalej? 😎
-
-
-chce by mozna byało sie poruszac asdw
-
-Jasne 😎
-Dodamy obsługę WASD tak, żeby działało razem ze strzałkami.
-
-W Twoim kodzie znajdź ten fragment:
-
-document.addEventListener('keydown', event => {
-    if (event.key === 'ArrowUp' && direction !== 'DOWN') direction = 'UP';
-    if (event.key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
-    if (event.key === 'ArrowLeft' && direction !== 'RIGHT') direction = 'LEFT';
-    if (event.key === 'ArrowRight' && direction !== 'LEFT') direction = 'RIGHT';
-});
-I zamień go na to:
-
-document.addEventListener('keydown', event => {
-
-    const key = event.key.toLowerCase();
-
-    // GÓRA
-    if ((key === 'arrowup' || key === 'w') && direction !== 'DOWN') {
-        direction = 'UP';
-    }
-
-    // DÓŁ
-    if ((key === 'arrowdown' || key === 's') && direction !== 'UP') {
-        direction = 'DOWN';
-    }
-
-    // LEWO
-    if ((key === 'arrowleft' || key === 'a') && direction !== 'RIGHT') {
-        direction = 'LEFT';
-    }
-
-    // PRAWO
-    if ((key === 'arrowright' || key === 'd') && direction !== 'LEFT') {
-        direction = 'RIGHT';
-    }
-});
-✅ Teraz działa:
-⬆️ Strzałki
-
-🎮 WASD (W-góra, S-dół, A-lewo, D-prawo)
-
-Nie da się zawrócić w siebie (blokada przeciwnego kierunku)
-
-Jeśli chcesz, mogę teraz dodać:
-
-🔥 sprint po
-
-
-dopisz do kodu
-
-Gotowe 😎🔥
-Poniżej masz cały kod z dodanym sterowaniem WASD + strzałki już wklejone w odpowiednie miejsce.
-
-Możesz podmienić cały plik.
-
-🐍 SNAKE NEO + WASD
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake Neo Edition</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background: radial-gradient(circle at center, #0f0f1a, #050510);
-            font-family: 'Orbitron', sans-serif;
-            overflow: hidden;
-        }
-
-        #gameCanvas {
-            border: 2px solid #00f7ff;
-            background-color: #0a0a14;
-            box-shadow: 
-                0 0 10px #00f7ff,
-                0 0 20px #00f7ff,
-                0 0 40px #00f7ff;
-        }
-
-        #gameOver {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px;
-            background: rgba(10, 10, 20, 0.95);
-            border: 2px solid #ff00cc;
-            box-shadow:
-                0 0 15px #ff00cc,
-                0 0 30px #ff00cc;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-            color: #00f7ff;
-            text-align: center;
-        }
-
-        #gameOver h2 {
-            color: #ff00cc;
-            text-shadow: 0 0 10px #ff00cc;
-        }
-
-        button {
-            padding: 12px 25px;
-            font-size: 16px;
-            margin-top: 20px;
-            background: transparent;
-            border: 2px solid #00f7ff;
-            color: #00f7ff;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: #00f7ff;
-            color: #0a0a14;
-            box-shadow: 0 0 15px #00f7ff;
-        }
-    </style>
+button {
+    padding: 12px 25px;
+    margin-top: 20px;
+    background: transparent;
+    border: 2px solid #00f7ff;
+    color: #00f7ff;
+    cursor: pointer;
+}
+button:hover {
+    background: #00f7ff;
+    color: #0a0a14;
+}
+</style>
 </head>
 
 <body>
-    <canvas id="gameCanvas" width="600" height="600"></canvas>
 
-    <div id="gameOver">
-        <h2>GAME OVER</h2>
-        <p>Twój wynik: <span id="currentScore">0</span></p>
-        <p>Najlepszy wynik: <span id="bestScore">0</span></p>
-        <button id="restartButton">Zagraj ponownie</button>
-    </div>
+<canvas id="gameCanvas" width="600" height="600"></canvas>
+
+<div id="gameOver">
+    <h2>GAME OVER</h2>
+    <p>Twój wynik: <span id="currentScore">0</span></p>
+    <p>Najlepszy wynik: <span id="bestScore">0</span></p>
+    <button id="restartButton">Zagraj ponownie</button>
+</div>
 
 <script>
 const canvas = document.getElementById('gameCanvas');
@@ -467,15 +77,18 @@ let score = 0;
 let bestScore = localStorage.getItem('bestScore') ? parseInt(localStorage.getItem('bestScore')) : 0;
 let game;
 
+/* 🔊 DŹWIĘKI */
+const eatSound = new Audio("https://actions.google.com/sounds/v1/cartoon/pop.ogg");
+const gameOverSound = new Audio("https://actions.google.com/sounds/v1/cartoon/concussive_hit_guitar_boing.ogg");
+
 function startGame() {
     snake = [{x: 300, y: 300}];
     direction = 'UP';
     food = generateFood();
     score = 0;
     document.getElementById('gameOver').style.display = 'none';
-    document.getElementById('bestScore').innerText = bestScore;
     clearInterval(game);
-    game = setInterval(draw, 120);
+    game = setInterval(draw, 160); // 🔥 wolniejsze tempo
 }
 
 function generateFood() {
@@ -488,47 +101,40 @@ function generateFood() {
 function drawApple(x, y) {
     ctx.shadowColor = "#ff004c";
     ctx.shadowBlur = 20;
-
     ctx.fillStyle = '#ff004c';
     ctx.beginPath();
-    ctx.arc(x + box / 2, y + box / 2, box / 2, 0, Math.PI * 2);
+    ctx.arc(x + box/2, y + box/2, box/2, 0, Math.PI*2);
     ctx.fill();
-
     ctx.shadowBlur = 0;
 }
 
 function drawSnake() {
     snake.forEach((segment, i) => {
-        ctx.shadowColor = "#00f7ff";
-        ctx.shadowBlur = 15;
 
-        ctx.fillStyle = i === 0 ? "#ff00cc" : "#00f7ff";
+        if (i === 0) {
+            // 🔥 GŁOWA - mocniejszy neon
+            ctx.shadowColor = "#ff00cc";
+            ctx.shadowBlur = 25;
+            ctx.fillStyle = "#ff00cc";
+        } else {
+            ctx.shadowColor = "#00f7ff";
+            ctx.shadowBlur = 15;
+            ctx.fillStyle = "#00f7ff";
+        }
+
         ctx.fillRect(segment.x, segment.y, box, box);
-
         ctx.shadowBlur = 0;
     });
 }
 
-/* 🔥 STEROWANIE STRZAŁKI + WASD */
+/* 🎮 STEROWANIE WASD + STRZAŁKI */
 document.addEventListener('keydown', event => {
-
     const key = event.key.toLowerCase();
 
-    if ((key === 'arrowup' || key === 'w') && direction !== 'DOWN') {
-        direction = 'UP';
-    }
-
-    if ((key === 'arrowdown' || key === 's') && direction !== 'UP') {
-        direction = 'DOWN';
-    }
-
-    if ((key === 'arrowleft' || key === 'a') && direction !== 'RIGHT') {
-        direction = 'LEFT';
-    }
-
-    if ((key === 'arrowright' || key === 'd') && direction !== 'LEFT') {
-        direction = 'RIGHT';
-    }
+    if ((key === 'arrowup' || key === 'w') && direction !== 'DOWN') direction = 'UP';
+    if ((key === 'arrowdown' || key === 's') && direction !== 'UP') direction = 'DOWN';
+    if ((key === 'arrowleft' || key === 'a') && direction !== 'RIGHT') direction = 'LEFT';
+    if ((key === 'arrowright' || key === 'd') && direction !== 'LEFT') direction = 'RIGHT';
 });
 
 function draw() {
@@ -546,6 +152,7 @@ function draw() {
     if (direction === 'DOWN') snakeY += box;
 
     if (snakeX === food.x && snakeY === food.y) {
+        eatSound.play(); // 🔊 dźwięk jedzenia
         food = generateFood();
         score++;
     } else {
@@ -562,10 +169,13 @@ function draw() {
         snake.some(segment => segment.x === snakeX && segment.y === snakeY)
     ) {
         clearInterval(game);
+        gameOverSound.play(); // 🔊 dźwięk przegranej
+
         if (score > bestScore) {
             bestScore = score;
             localStorage.setItem('bestScore', bestScore);
         }
+
         document.getElementById('currentScore').innerText = score;
         document.getElementById('bestScore').innerText = bestScore;
         document.getElementById('gameOver').style.display = 'flex';
@@ -581,24 +191,3 @@ document.getElementById('restartButton').addEventListener('click', startGame);
 
 </body>
 </html>
-Teraz możesz grać:
-
-⬆️⬇️⬅️➡️ Strzałkami
-
-🎮 W A S D
-
-Jeśli chcesz, mogę teraz zrobić:
-
-⚡ Sprint po przytrzymaniu SHIFT
-
-🔥 Tryb Hardcore (ściany zabijają natychmiast + większa prędkość)
-
-🏆 Ranking top 10
-
-🎵 Efekty dźwiękowe
-
-Co robimy dalej? 😎
-
-
-
-
