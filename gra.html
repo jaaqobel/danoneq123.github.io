@@ -82,6 +82,12 @@ let game;
 const eatSound = new Audio("https://actions.google.com/sounds/v1/cartoon/pop.ogg");
 const gameOverSound = new Audio("https://actions.google.com/sounds/v1/cartoon/concussive_hit_guitar_boing.ogg");
 
+/* 🔥 LOSOWE NEONOWE KOLORY */
+function getRandomNeonColor() {
+    const colors = ["#ff00cc", "#00f7ff", "#ffea00", "#00ff6a", "#ff6a00", "#ff004c"];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
 function startGame() {
     snake = [{x: 300, y: 300}];
     direction = "UP";
@@ -119,15 +125,19 @@ function drawApple(x, y) {
 
 function drawSnake() {
     snake.forEach((segment, i) => {
+        let color, shadow, blur;
         if (i === 0) {
-            ctx.fillStyle = "#ff00cc";
-            ctx.shadowColor = "#ff00cc";
-            ctx.shadowBlur = 20;
+            color = "#ff00cc"; // głowa
+            shadow = "#ff00cc";
+            blur = 25;
         } else {
-            ctx.fillStyle = "#00f7ff";
-            ctx.shadowColor = "#00f7ff";
-            ctx.shadowBlur = 10;
+            color = getRandomNeonColor(); // segmenty
+            shadow = color;
+            blur = 15;
         }
+        ctx.fillStyle = color;
+        ctx.shadowColor = shadow;
+        ctx.shadowBlur = blur;
         ctx.fillRect(segment.x, segment.y, box, box);
         ctx.shadowBlur = 0;
     });
@@ -135,7 +145,6 @@ function drawSnake() {
 
 document.addEventListener("keydown", e => {
     const key = e.key.toLowerCase();
-
     if ((key === "arrowup" || key === "w") && direction !== "DOWN") direction = "UP";
     if ((key === "arrowdown" || key === "s") && direction !== "UP") direction = "DOWN";
     if ((key === "arrowleft" || key === "a") && direction !== "RIGHT") direction = "LEFT";
@@ -151,11 +160,6 @@ function draw() {
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
 
-    if (direction === "LEFT") snakeX -= box;
-    if (direction === "UP") snakeY -= box;
-    if (direction === "RIGHT") snakeX += box;
-    if (direction === "DOWN") snakeY += box;
-
     const collisionWithSelf = snake.slice(1).some(segment =>
         segment.x === snakeX && segment.y === snakeY
     );
@@ -168,7 +172,6 @@ function draw() {
         collisionWithSelf
     ) {
         clearInterval(game);
-
         gameOverSound.currentTime = 0;
         gameOverSound.play().catch(() => {});
 
