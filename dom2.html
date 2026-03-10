@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Bloki DOM</title>
+
+<style>
+
+body{
+  font-family: Arial;
+  text-align: center;
+  margin-top: 40px;
+}
+
+#container{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+.box{
+  padding:10px 15px;
+  border:1px solid #ccc;
+  border-radius:6px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  cursor:grab;
+  background:#eee;
+}
+
+.box:active{
+  cursor:grabbing;
+}
+
+button{
+  padding:8px 12px;
+  cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>Bloki</h2>
+
+<button id="addBtn">Dodaj blok</button>
+
+<div id="container"></div>
+
+<script>
+
+const container = document.getElementById("container");
+const addBtn = document.getElementById("addBtn");
+
+let counter = 1;
+let dragged = null;
+
+// przeciąganie
+function addDragEvents(element){
+
+  element.addEventListener("dragstart",()=>{
+    dragged = element;
+    element.style.opacity="0.5";
+  });
+
+  element.addEventListener("dragend",()=>{
+    element.style.opacity="1";
+  });
+
+  element.addEventListener("dragover",(e)=>{
+    e.preventDefault();
+  });
+
+  element.addEventListener("drop",(e)=>{
+    e.preventDefault();
+
+    if(dragged !== element){
+      const boxes=[...container.children];
+
+      const draggedIndex=boxes.indexOf(dragged);
+      const targetIndex=boxes.indexOf(element);
+
+      if(draggedIndex < targetIndex){
+        element.after(dragged);
+      }else{
+        element.before(dragged);
+      }
+    }
+
+  });
+
+}
+
+// tworzenie bloku
+function createBox(text){
+
+  const div=document.createElement("div");
+  div.className="box";
+  div.draggable=true;
+
+  const span=document.createElement("span");
+  span.textContent=text;
+
+  const editBtn=document.createElement("button");
+  editBtn.textContent="Edytuj";
+
+  editBtn.onclick=()=>{
+    const newText=prompt("Nowy tekst:",span.textContent);
+    if(newText) span.textContent=newText;
+  };
+
+  const removeBtn=document.createElement("button");
+  removeBtn.textContent="Usuń";
+
+  removeBtn.onclick=()=>{
+    div.remove();
+  };
+
+  div.append(span,editBtn,removeBtn);
+
+  addDragEvents(div);
+
+  return div;
+}
+
+// dodawanie bloków
+addBtn.onclick=()=>{
+  container.appendChild(createBox("Blok "+counter++));
+};
+
+</script>
+
+</body>
+</html>
