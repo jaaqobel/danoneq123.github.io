@@ -28,7 +28,6 @@ body{
   gap:10px;
   align-items:center;
   cursor:grab;
-  background:#eee;
 }
 
 .box:active{
@@ -58,6 +57,11 @@ const addBtn = document.getElementById("addBtn");
 
 let counter = 1;
 let dragged = null;
+
+// funkcja losowego koloru
+function randomColor(){
+  return `hsl(${Math.random()*360},70%,75%)`;
+}
 
 // przeciąganie
 function addDragEvents(element){
@@ -101,6 +105,8 @@ function createBox(text){
   const div=document.createElement("div");
   div.className="box";
   div.draggable=true;
+
+  div.style.backgroundColor=randomColor();
 
   const span=document.createElement("span");
   span.textContent=text;
